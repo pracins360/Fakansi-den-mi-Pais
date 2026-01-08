@@ -3,231 +3,1100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vacation Club - Member Portal</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Vacation Club | Member Login</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-    <!-- Login Screen -->
-    <div id="loginScreen" class="screen">
-        <div class="login-container">
-            <div class="logo">
-                <i class="fas fa-umbrella-beach"></i>
-                <h1>Vacation Club</h1>
-                <p>Your exclusive access to premium hotel deals</p>
-            </div>
-            
-            <div class="login-form">
-                <h2>Member Login</h2>
-                <div class="input-group">
-                    <label for="memberId">Member ID</label>
-                    <input type="text" id="memberId" placeholder="VC-001">
-                </div>
-                <div class="input-group">
-                    <label for="password">PIN (4 digits)</label>
-                    <input type="password" id="password" maxlength="4" placeholder="1234">
-                </div>
-                <button onclick="login()" class="btn-primary">
-                    <i class="fas fa-sign-in-alt"></i> Enter Club
-                </button>
-                
-                <div class="demo-credentials">
-                    <p><strong>Demo Login:</strong> VC-001 / 1234</p>
-                    <p><strong>Or:</strong> VC-002 / 2345</p>
-                </div>
-            </div>
-        </div>
-    </div>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
 
-    <!-- Member Dashboard -->
-    <div id="dashboard" class="screen" style="display: none;">
-        <header class="dashboard-header">
-            <div class="header-left">
-                <h1><i class="fas fa-crown"></i> Vacation Club</h1>
-                <p class="member-greeting">Welcome, <span id="memberName"></span></p>
-            </div>
-            <div class="header-right">
-                <div class="member-info">
-                    <span id="memberIdDisplay"></span>
-                    <span class="status-badge active">Active Member</span>
-                </div>
-                <button onclick="logout()" class="btn-logout">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </button>
-            </div>
-        </header>
+        body {
+            background: linear-gradient(135deg, #1a237e 0%, #311b92 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
 
-        <main class="dashboard-main">
-            <!-- Available Hotels Section -->
-            <section class="section">
-                <h2><i class="fas fa-hotel"></i> Partner Hotels</h2>
-                <p class="section-subtitle">Click on any hotel to see exclusive promotions</p>
-                
-                <div class="hotels-grid" id="hotelsGrid">
-                    <!-- Hotels will be dynamically loaded here -->
-                </div>
-            </section>
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            min-height: 700px;
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
 
-            <!-- My Check-ins Section -->
-            <section class="section" id="checkinsSection">
-                <h2><i class="fas fa-calendar-check"></i> My Recent Check-ins</h2>
-                <div class="checkins-list" id="checkinsList">
-                    <!-- Check-ins will be loaded here -->
-                </div>
-            </section>
-        </main>
-    </div>
+        /* Left Panel - Hero */
+        .hero-panel {
+            flex: 1;
+            background: linear-gradient(rgba(26, 35, 126, 0.9), rgba(49, 27, 146, 0.9)), url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
 
-    <!-- Hotel Details Modal -->
-    <div id="hotelModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modalHotelName"></h2>
-                <button class="close-modal" onclick="closeHotelModal()">&times;</button>
-            </div>
-            
-            <div class="modal-body">
-                <div class="hotel-info">
-                    <div class="hotel-header">
-                        <img id="modalHotelLogo" src="" alt="Hotel Logo" class="hotel-logo-large">
-                        <div>
-                            <p id="modalHotelLocation" class="hotel-location"></p>
-                            <p id="modalHotelDescription" class="hotel-description"></p>
-                        </div>
-                    </div>
-                    
-                    <!-- Promotions -->
-                    <div class="promotions-section">
-                        <h3><i class="fas fa-tag"></i> Available Promotions</h3>
-                        <div id="promotionsList" class="promotions-list">
-                            <!-- Promos will be loaded here -->
-                        </div>
-                    </div>
-                    
-                    <!-- Booking Instructions -->
-                    <div class="booking-section">
-                        <h3><i class="fas fa-phone-alt"></i> How to Book</h3>
-                        <div class="booking-instructions">
-                            <div class="instruction-step">
-                                <div class="step-number">1</div>
-                                <div class="step-content">
-                                    <strong>Call or Visit Website</strong>
-                                    <p id="modalBookingPhone"></p>
-                                    <p id="modalBookingWebsite"></p>
-                                    <small id="modalBookingNote"></small>
-                                </div>
-                            </div>
-                            
-                            <div class="instruction-step">
-                                <div class="step-number">2</div>
-                                <div class="step-content">
-                                    <strong>Get Verification</strong>
-                                    <p>Mention you're a Vacation Club member. Hotel staff will verify your membership.</p>
-                                    <button onclick="showVerificationInfo()" class="btn-secondary">
-                                        <i class="fas fa-qrcode"></i> Show My Verification QR
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <div class="instruction-step">
-                                <div class="step-number">3</div>
-                                <div class="step-content">
-                                    <strong>Complete Booking</strong>
-                                    <p>After verification, use the promotion and complete your booking normally.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
 
-    <!-- QR Code Modal -->
-    <div id="qrModal" class="modal">
-        <div class="modal-content qr-modal">
-            <div class="modal-header">
-                <h3>Membership Verification</h3>
-                <button class="close-modal" onclick="closeQRModal()">&times;</button>
-            </div>
-            <div class="modal-body text-center">
-                <p>Show this to hotel staff for verification:</p>
-                <div id="qrcode" class="qr-container"></div>
-                <p class="member-id-display" id="qrMemberId"></p>
-                <p class="member-name-display" id="qrMemberName"></p>
-                <div class="verification-instructions">
-                    <p><i class="fas fa-info-circle"></i> Hotel staff will scan this code to verify your membership and apply your discount.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+        .logo-icon {
+            background: rgba(255, 255, 255, 0.1);
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
 
-    <script src="data.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-    <script>
-        // Current logged in member
-        let currentMember = null;
-        let currentHotel = null;
+        .logo-icon i {
+            font-size: 28px;
+            color: #fff;
+        }
 
-        // Login function
-        function login() {
-            const memberId = document.getElementById('memberId').value.trim().toUpperCase();
-            const password = document.getElementById('password').value;
-            
-            // Find member
-            const member = vacationClubData.members.find(m => 
-                m.id === memberId && m.password === password && m.status === 'active'
-            );
-            
-            if (member) {
-                currentMember = member;
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
-                
-                // Update UI
-                document.getElementById('memberName').textContent = `${member.firstName} ${member.lastName}`;
-                document.getElementById('memberIdDisplay').textContent = member.id;
-                
-                // Load hotels and checkins
-                loadHotels();
-                loadCheckins();
-            } else {
-                alert('Invalid login or inactive account. Please check your Member ID and PIN.');
+        .logo-text h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        .logo-text p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .hero-content {
+            margin-top: auto;
+        }
+
+        .hero-content h2 {
+            font-size: 42px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .hero-content p {
+            font-size: 18px;
+            line-height: 1.6;
+            opacity: 0.95;
+            margin-bottom: 30px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+        }
+
+        .feature-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-icon i {
+            font-size: 16px;
+            color: white;
+        }
+
+        /* Right Panel - Login */
+        .login-panel {
+            flex: 1;
+            padding: 60px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: #f8fafc;
+        }
+
+        .login-header {
+            margin-bottom: 40px;
+        }
+
+        .login-header h2 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+
+        .login-header p {
+            color: #64748b;
+            font-size: 16px;
+        }
+
+        .login-form {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            font-size: 18px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 16px 16px 48px;
+            font-size: 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            background: white;
+            color: #1e293b;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #94a3b8;
+        }
+
+        .signin-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .signin-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+        }
+
+        .signin-btn:active {
+            transform: translateY(0);
+        }
+
+        .signin-btn i {
+            font-size: 18px;
+        }
+
+        .demo-info {
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+            border-left: 4px solid #4f46e5;
+        }
+
+        .demo-info h4 {
+            color: #1e293b;
+            margin-bottom: 10px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .demo-info p {
+            color: #475569;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .demo-credentials {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            border: 1px dashed #cbd5e1;
+        }
+
+        .credential-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .credential-item:last-child {
+            border-bottom: none;
+        }
+
+        .member-id {
+            font-weight: 600;
+            color: #1e293b;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .password {
+            color: #475569;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .footer-links {
+            margin-top: 40px;
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .footer-links a {
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .notification {
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        // Logout function
-        function logout() {
-            currentMember = null;
-            document.getElementById('dashboard').style.display = 'none';
-            document.getElementById('loginScreen').style.display = 'block';
-            document.getElementById('memberId').value = '';
-            document.getElementById('password').value = '';
+        .notification.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
         }
 
-        // Load hotels
+        .notification.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .notification.info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+        }
+
+        /* Dashboard Styles */
+        .dashboard-container {
+            width: 100%;
+            max-width: 1400px;
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            display: none;
+        }
+
+        .dashboard-header {
+            background: linear-gradient(135deg, #1a237e 0%, #311b92 100%);
+            color: white;
+            padding: 25px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .member-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .member-avatar {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .member-details h3 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .member-details p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .dashboard-content {
+            padding: 40px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            color: #1e293b;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .hotels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .hotel-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .hotel-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border-color: #c7d2fe;
+        }
+
+        .hotel-image {
+            height: 200px;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), var(--hotel-bg);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .hotel-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #4f46e5;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .hotel-content {
+            padding: 25px;
+        }
+
+        .hotel-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .hotel-location {
+            color: #64748b;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hotel-location i {
+            color: #4f46e5;
+        }
+
+        .hotel-description {
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .promo-section {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .promo-title {
+            color: #4f46e5;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .promo-details {
+            color: #475569;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .booking-btn {
+            width: 100%;
+            margin-top: 20px;
+            padding: 14px;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .booking-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlide 0.4s ease;
+        }
+
+        @keyframes modalSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #1a237e 0%, #311b92 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .close-modal {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .qr-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: monospace;
+            font-size: 24px;
+            font-weight: bold;
+            color: #4f46e5;
+            letter-spacing: 2px;
+            border: 2px dashed #cbd5e1;
+        }
+
+        .instructions {
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .instruction-step {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .instruction-step:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .step-number {
+            background: #4f46e5;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+                max-width: 600px;
+            }
+            
+            .hero-panel, .login-panel {
+                padding: 40px 30px;
+            }
+            
+            .hero-content h2 {
+                font-size: 32px;
+            }
+            
+            .hotels-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                border-radius: 16px;
+            }
+            
+            .hero-panel, .login-panel {
+                padding: 30px 20px;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .member-info {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Container -->
+    <div class="container" id="loginContainer">
+        <!-- Left Panel - Hero -->
+        <div class="hero-panel">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-umbrella-beach"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Vacation Club</h1>
+                    <p>Exclusive Travel Experiences</p>
+                </div>
+            </div>
+
+            <div class="hero-content">
+                <h2>Your Passport to Premium Getaways</h2>
+                <p>Access exclusive discounts at luxury hotels and resorts worldwide. Join 300+ members enjoying premium travel benefits.</p>
+                
+                <div class="features">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-percent"></i>
+                        </div>
+                        <span>Up to 40% Discount</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-hotel"></i>
+                        </div>
+                        <span>30+ Partner Hotels</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <span>Secure Access</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <span>24/7 Support</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel - Login -->
+        <div class="login-panel">
+            <div class="login-header">
+                <h2>Member Login</h2>
+                <p>Enter your credentials to access exclusive benefits</p>
+            </div>
+
+            <!-- Notification Area -->
+            <div id="notification" class="notification"></div>
+
+            <div class="login-form">
+                <div class="form-group">
+                    <label class="form-label" for="memberId">Member ID</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-user-tag"></i>
+                        <input type="text" id="memberId" class="form-input" placeholder="VC-001" autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" class="form-input" placeholder="Enter your 4-digit PIN" maxlength="4">
+                    </div>
+                </div>
+
+                <button class="signin-btn" onclick="loginMember()">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Sign In
+                </button>
+
+                <div class="demo-info">
+                    <h4><i class="fas fa-info-circle"></i> Demo Login</h4>
+                    <p>Use one of these credentials to test the system:</p>
+                    
+                    <div class="demo-credentials">
+                        <div class="credential-item">
+                            <span class="member-id">VC-001</span>
+                            <span class="password">1234</span>
+                        </div>
+                        <div class="credential-item">
+                            <span class="member-id">VC-002</span>
+                            <span class="password">2345</span>
+                        </div>
+                        <div class="credential-item">
+                            <span class="member-id">VC-003</span>
+                            <span class="password">3456</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <p>Need help? <a href="mailto:support@vacationclub.com">Contact Support</a></p>
+                <p style="margin-top: 10px;">© 2024 Vacation Club. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Container (Hidden by default) -->
+    <div class="dashboard-container" id="dashboardContainer">
+        <div class="dashboard-header">
+            <div class="member-info">
+                <div class="member-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="member-details">
+                    <h3 id="dashboardMemberName">John Smith</h3>
+                    <p id="dashboardMemberId">VC-001 • Active Member</p>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </button>
+        </div>
+
+        <div class="dashboard-content">
+            <h2 class="section-title">Partner Hotels & Resorts</h2>
+            <p style="color: #64748b; margin-bottom: 30px;">Click on any hotel to view exclusive promotions and booking instructions.</p>
+            
+            <div class="hotels-grid" id="hotelsGrid">
+                <!-- Hotels will be loaded here dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Hotel Details Modal -->
+    <div class="modal" id="hotelModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalHotelName">Hotel Details</h3>
+                <button class="close-modal" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="modalContent">
+                    <!-- Content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Vacation Club Database
+        const vacationClubDB = {
+            members: [
+                {
+                    id: "VC-001",
+                    firstName: "John",
+                    lastName: "Smith",
+                    password: "1234",
+                    status: "active",
+                    isPaid: true,
+                    joinDate: "2024-01-15",
+                    email: "john@example.com"
+                },
+                {
+                    id: "VC-002",
+                    firstName: "Maria",
+                    lastName: "Garcia",
+                    password: "2345",
+                    status: "active",
+                    isPaid: true,
+                    joinDate: "2024-02-01",
+                    email: "maria@example.com"
+                },
+                {
+                    id: "VC-003",
+                    firstName: "David",
+                    lastName: "Chen",
+                    password: "3456",
+                    status: "active",
+                    isPaid: true,
+                    joinDate: "2024-02-15",
+                    email: "david@example.com"
+                },
+                {
+                    id: "VC-004",
+                    firstName: "Sarah",
+                    lastName: "Johnson",
+                    password: "4567",
+                    status: "inactive",
+                    isPaid: false,
+                    joinDate: "2024-01-20",
+                    email: "sarah@example.com"
+                },
+                {
+                    id: "VC-005",
+                    firstName: "Michael",
+                    lastName: "Brown",
+                    password: "5678",
+                    status: "active",
+                    isPaid: true,
+                    joinDate: "2024-03-01",
+                    email: "michael@example.com"
+                }
+            ],
+            
+            hotels: [
+                {
+                    id: "HOTEL-001",
+                    name: "Sunset Resort & Spa",
+                    location: "Bali, Indonesia",
+                    description: "Luxury beachfront resort with private villas, infinity pools, and world-class spa facilities.",
+                    discount: "40% off villas",
+                    promoCode: "VCSUNSET40",
+                    instructions: "Call +62 361 777 888 and mention Vacation Club code",
+                    contact: "Mr. Wayan - Resort Manager",
+                    phone: "+62 361 777 888",
+                    email: "bookings@sunsetresortbali.com",
+                    image: "https://images.unsplash.com/photo-1519046904884-53103b34b206?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                    benefits: ["Free upgrade to ocean view", "Complimentary breakfast", "Spa discount", "Late checkout"]
+                },
+                {
+                    id: "HOTEL-002",
+                    name: "Alpine Mountain Lodge",
+                    location: "Swiss Alps, Switzerland",
+                    description: "Ski-in/ski-out luxury lodge with panoramic mountain views and gourmet dining.",
+                    discount: "35% off suites",
+                    promoCode: "VCALPINE35",
+                    instructions: "Email with Vacation Club membership confirmation",
+                    contact: "Ms. Müller - Guest Relations",
+                    phone: "+41 27 967 1234",
+                    email: "reservations@alpinelodge.ch",
+                    image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                    benefits: ["Free ski equipment rental", "Hot chocolate bar access", "Private ski instructor discount", "Fireplace suite upgrade"]
+                },
+                {
+                    id: "HOTEL-003",
+                    name: "Metropolitan Grand Hotel",
+                    location: "New York City, USA",
+                    description: "5-star hotel in Times Square with rooftop bar and premium city views.",
+                    discount: "30% off executive rooms",
+                    promoCode: "VCMETRO30",
+                    instructions: "Book online using promo code or call VIP line",
+                    contact: "Mr. Johnson - VIP Concierge",
+                    phone: "+1 212 555 0199",
+                    email: "vip@metropolitangrand.com",
+                    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                    benefits: ["Free Broadway show tickets", "Rooftop bar access", "Limosine service discount", "Breakfast included"]
+                },
+                {
+                    id: "HOTEL-004",
+                    name: "Desert Oasis Resort",
+                    location: "Dubai, UAE",
+                    description: "Ultra-luxury desert resort with private pools and butler service.",
+                    discount: "25% off all-inclusive",
+                    promoCode: "VCDESERT25",
+                    instructions: "Contact via WhatsApp for special VC rates",
+                    contact: "Mr. Al-Mansoori - Director",
+                    phone: "+971 4 567 8901",
+                    email: "vclub@desertoasis.ae",
+                    image: "https://images.unsplash.com/photo-1518684079-3c830dcef090?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                    benefits: ["Private pool villa upgrade", "Camel ride experience", "Desert safari discount", "24/7 butler service"]
+                },
+                {
+                    id: "HOTEL-005",
+                    name: "Island Paradise Resort",
+                    location: "Maldives",
+                    description: "Overwater bungalows with glass floors and direct ocean access.",
+                    discount: "20% off water villas",
+                    promoCode: "VCISLAND20",
+                    instructions: "Book through dedicated VC website portal",
+                    contact: "Ms. Lee - Island Manager",
+                    phone: "+960 662 0001",
+                    email: "paradise@islandresort.mv",
+                    image: "https://images.unsplash.com/photo-1516496636080-14fb876e029d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                    benefits: ["Free snorkeling gear", "Sunset cruise", "Spa treatment discount", "Seaplane transfer included"]
+                }
+            ]
+        };
+
+        // Current logged in member
+        let currentMember = null;
+
+        // Show notification
+        function showNotification(message, type = 'info') {
+            const notification = document.getElementById('notification');
+            notification.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i> ${message}`;
+            notification.className = `notification ${type}`;
+            notification.style.display = 'block';
+            
+            // Auto hide after 5 seconds
+            if (type === 'success' || type === 'error') {
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        // Login function
+        function loginMember() {
+            const memberId = document.getElementById('memberId').value.trim().toUpperCase();
+            const password = document.getElementById('password').value;
+            
+            // Validation
+            if (!memberId || !password) {
+                showNotification('Please enter both Member ID and Password', 'error');
+                return;
+            }
+            
+            // Find member
+            const member = vacationClubDB.members.find(m => 
+                m.id === memberId && m.password === password
+            );
+            
+            if (member) {
+                if (member.status !== 'active') {
+                    showNotification('Your account is inactive. Please contact support.', 'error');
+                    return;
+                }
+                
+                if (!member.isPaid) {
+                    showNotification('Membership payment pending. Please complete payment.', 'error');
+                    return;
+                }
+                
+                // Login successful
+                currentMember = member;
+                showNotification(`Welcome back, ${member.firstName}!`, 'success');
+                
+                // Switch to dashboard after 1 second
+                setTimeout(() => {
+                    document.getElementById('loginContainer').style.display = 'none';
+                    document.getElementById('dashboardContainer').style.display = 'block';
+                    
+                    // Update dashboard info
+                    document.getElementById('dashboardMemberName').textContent = 
+                        `${member.firstName} ${member.lastName}`;
+                    document.getElementById('dashboardMemberId').textContent = 
+                        `${member.id} • ${member.isPaid ? 'Premium Member' : 'Standard Member'}`;
+                    
+                    // Load hotels
+                    loadHotels();
+                }, 1000);
+                
+            } else {
+                showNotification('Invalid Member ID or Password. Try VC-001 / 1234', 'error');
+            }
+        }
+
+        // Load hotels to dashboard
         function loadHotels() {
             const hotelsGrid = document.getElementById('hotelsGrid');
             hotelsGrid.innerHTML = '';
             
-            vacationClubData.hotels.forEach(hotel => {
+            vacationClubDB.hotels.forEach(hotel => {
                 const hotelCard = document.createElement('div');
                 hotelCard.className = 'hotel-card';
                 hotelCard.onclick = () => openHotelModal(hotel.id);
                 
                 hotelCard.innerHTML = `
-                    <div class="hotel-card-header">
-                        <img src="${hotel.logo || 'default-hotel.png'}" alt="${hotel.name}" class="hotel-logo">
-                        <div class="hotel-card-info">
-                            <h3>${hotel.name}</h3>
-                            <p class="hotel-location-card">${hotel.location}</p>
-                            <span class="promo-count">${hotel.promos.length} promotion${hotel.promos.length !== 1 ? 's' : ''}</span>
-                        </div>
+                    <div class="hotel-image" style="--hotel-bg: url('${hotel.image}')">
+                        <div class="hotel-badge">${hotel.discount}</div>
                     </div>
-                    <div class="hotel-card-footer">
-                        <span class="view-promos-btn">
-                            View Promotions <i class="fas fa-chevron-right"></i>
-                        </span>
+                    <div class="hotel-content">
+                        <h3 class="hotel-name">${hotel.name}</h3>
+                        <p class="hotel-location">
+                            <i class="fas fa-map-marker-alt"></i> ${hotel.location}
+                        </p>
+                        <p class="hotel-description">${hotel.description}</p>
+                        
+                        <div class="promo-section">
+                            <div class="promo-title">
+                                <i class="fas fa-tag"></i> Exclusive Offer
+                            </div>
+                            <p class="promo-details">
+                                <strong>${hotel.discount}</strong><br>
+                                Promo Code: <code>${hotel.promoCode}</code>
+                            </p>
+                        </div>
+                        
+                        <button class="booking-btn" onclick="event.stopPropagation(); bookHotel('${hotel.id}')">
+                            <i class="fas fa-calendar-check"></i> View Details & Book
+                        </button>
                     </div>
                 `;
                 
@@ -237,148 +1106,183 @@
 
         // Open hotel modal
         function openHotelModal(hotelId) {
-            currentHotel = vacationClubData.hotels.find(h => h.id === hotelId);
+            const hotel = vacationClubDB.hotels.find(h => h.id === hotelId);
+            if (!hotel || !currentMember) return;
             
-            document.getElementById('modalHotelName').textContent = currentHotel.name;
-            document.getElementById('modalHotelLocation').textContent = currentHotel.location;
-            document.getElementById('modalHotelDescription').textContent = currentHotel.description;
-            document.getElementById('modalHotelLogo').src = currentHotel.logo || 'default-hotel.png';
-            document.getElementById('modalBookingPhone').innerHTML = `<i class="fas fa-phone"></i> ${currentHotel.booking.phone}`;
-            document.getElementById('modalBookingWebsite').innerHTML = `<i class="fas fa-globe"></i> <a href="${currentHotel.booking.website}" target="_blank">${currentHotel.booking.website}</a>`;
-            document.getElementById('modalBookingNote').textContent = currentHotel.booking.note;
+            document.getElementById('modalHotelName').textContent = hotel.name;
             
-            // Load promotions
-            const promotionsList = document.getElementById('promotionsList');
-            promotionsList.innerHTML = '';
-            
-            currentHotel.promos.forEach(promo => {
-                const isActive = new Date(promo.validTo) >= new Date();
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = `
+                <div style="margin-bottom: 25px;">
+                    <div style="height: 200px; background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('${hotel.image}'); background-size: cover; background-position: center; border-radius: 12px; margin-bottom: 20px;"></div>
+                    
+                    <h4 style="color: #1e293b; margin-bottom: 10px;">📍 ${hotel.location}</h4>
+                    <p style="color: #475569; line-height: 1.6; margin-bottom: 20px;">${hotel.description}</p>
+                </div>
                 
-                const promoCard = document.createElement('div');
-                promoCard.className = `promo-card ${isActive ? 'active' : 'expired'}`;
+                <div style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; padding: 20px; border-radius: 12px; margin-bottom: 25px;">
+                    <h4 style="margin-bottom: 10px; font-size: 20px;"><i class="fas fa-gift"></i> Your Exclusive Offer</h4>
+                    <p style="font-size: 28px; font-weight: bold; margin-bottom: 5px;">${hotel.discount}</p>
+                    <p style="opacity: 0.9;">Promo Code: <code style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 6px; font-size: 16px;">${hotel.promoCode}</code></p>
+                </div>
                 
-                promoCard.innerHTML = `
-                    <div class="promo-header">
-                        <h4>${promo.title}</h4>
-                        <span class="promo-status">${isActive ? 'Valid' : 'Expired'}</span>
+                <div style="margin-bottom: 25px;">
+                    <h4 style="color: #1e293b; margin-bottom: 15px;"><i class="fas fa-check-circle"></i> Member Benefits</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        ${hotel.benefits.map(benefit => `
+                            <div style="background: #f1f5f9; padding: 12px; border-radius: 8px; font-size: 14px;">
+                                <i class="fas fa-check" style="color: #10b981; margin-right: 8px;"></i> ${benefit}
+                            </div>
+                        `).join('')}
                     </div>
-                    <p class="promo-description">${promo.description}</p>
-                    <div class="promo-details">
-                        <p><i class="far fa-calendar"></i> Valid: ${promo.validFrom} to ${promo.validTo}</p>
-                        <p><i class="fas fa-info-circle"></i> ${promo.instructions}</p>
-                        ${promo.promoCode ? `<p class="promo-code"><strong>Promo Code:</strong> <code>${promo.promoCode}</code></p>` : ''}
-                    </div>
-                `;
+                </div>
                 
-                promotionsList.appendChild(promoCard);
-            });
+                <div style="background: #f8fafc; border-radius: 12px; padding: 20px; margin-bottom: 25px;">
+                    <h4 style="color: #1e293b; margin-bottom: 15px;"><i class="fas fa-phone-alt"></i> Booking Instructions</h4>
+                    <p style="color: #475569; margin-bottom: 15px;">${hotel.instructions}</p>
+                    
+                    <div style="display: grid; gap: 15px;">
+                        <div>
+                            <strong style="color: #1e293b; display: block; margin-bottom: 5px;">Contact Person:</strong>
+                            <span style="color: #4f46e5;">${hotel.contact}</span>
+                        </div>
+                        <div>
+                            <strong style="color: #1e293b; display: block; margin-bottom: 5px;">Phone:</strong>
+                            <a href="tel:${hotel.phone}" style="color: #4f46e5; text-decoration: none;">${hotel.phone}</a>
+                        </div>
+                        <div>
+                            <strong style="color: #1e293b; display: block; margin-bottom: 5px;">Email:</strong>
+                            <a href="mailto:${hotel.email}" style="color: #4f46e5; text-decoration: none;">${hotel.email}</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="qr-container">
+                    <h4 style="color: #1e293b; margin-bottom: 15px;"><i class="fas fa-qrcode"></i> Verification QR Code</h4>
+                    <div class="qr-code">
+                        VC-${currentMember.id}<br>
+                        ${hotel.promoCode}
+                    </div>
+                    <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">
+                        Show this code at check-in for verification
+                    </p>
+                </div>
+                
+                <div class="instructions">
+                    <h4 style="color: #1e293b; margin-bottom: 15px;"><i class="fas fa-list-ol"></i> How to Book</h4>
+                    
+                    <div class="instruction-step">
+                        <div class="step-number">1</div>
+                        <div>
+                            <strong>Contact the Hotel</strong>
+                            <p style="color: #64748b; margin-top: 5px;">Call or email using the contact information above.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="instruction-step">
+                        <div class="step-number">2</div>
+                        <div>
+                            <strong>Provide Membership Details</strong>
+                            <p style="color: #64748b; margin-top: 5px;">Give them your Member ID: <strong>${currentMember.id}</strong> and promo code.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="instruction-step">
+                        <div class="step-number">3</div>
+                        <div>
+                            <strong>Get Verification</strong>
+                            <p style="color: #64748b; margin-top: 5px;">Hotel staff will verify your membership and apply the discount.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="instruction-step">
+                        <div class="step-number">4</div>
+                        <div>
+                            <strong>Complete Booking</strong>
+                            <p style="color: #64748b; margin-top: 5px;">Proceed with normal booking process using the discounted rate.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: 15px; margin-top: 30px;">
+                    <button onclick="bookHotel('${hotel.id}')" style="flex: 1; padding: 16px; background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        <i class="fas fa-phone-alt"></i> Call to Book
+                    </button>
+                    <button onclick="copyPromoCode('${hotel.promoCode}')" style="flex: 1; padding: 16px; background: #f1f5f9; color: #4f46e5; border: 2px solid #e2e8f0; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                        <i class="fas fa-copy"></i> Copy Promo Code
+                    </button>
+                </div>
+            `;
             
-            document.getElementById('hotelModal').style.display = 'block';
+            document.getElementById('hotelModal').style.display = 'flex';
         }
 
-        // Close hotel modal
-        function closeHotelModal() {
-            document.getElementById('hotelModal').style.display = 'none';
-            currentHotel = null;
-        }
-
-        // Show QR code for verification
-        function showVerificationInfo() {
-            document.getElementById('hotelModal').style.display = 'none';
+        // Book hotel function
+        function bookHotel(hotelId) {
+            const hotel = vacationClubDB.hotels.find(h => h.id === hotelId);
+            if (!hotel) return;
             
-            // Generate QR code with member data
-            const qrData = JSON.stringify({
-                memberId: currentMember.id,
-                memberName: `${currentMember.firstName} ${currentMember.lastName}`,
-                timestamp: new Date().toISOString(),
-                hotelId: currentHotel?.id
-            });
+            // Simulate booking process
+            showNotification(`Opening booking for ${hotel.name}...`, 'info');
             
-            const qrContainer = document.getElementById('qrcode');
-            qrContainer.innerHTML = '';
-            
-            QRCode.toCanvas(qrContainer, qrData, {
-                width: 200,
-                margin: 2,
-                color: {
-                    dark: '#2c3e50',
-                    light: '#ffffff'
+            // In a real app, this would redirect or open phone dialer
+            setTimeout(() => {
+                if (confirm(`Call ${hotel.name} at ${hotel.phone}?\n\nClick OK to call or Cancel to copy the number.`)) {
+                    window.open(`tel:${hotel.phone}`, '_blank');
+                } else {
+                    navigator.clipboard.writeText(hotel.phone);
+                    showNotification('Phone number copied to clipboard!', 'success');
                 }
-            }, function(error) {
-                if (error) console.error(error);
-            });
-            
-            document.getElementById('qrMemberId').textContent = currentMember.id;
-            document.getElementById('qrMemberName').textContent = `${currentMember.firstName} ${currentMember.lastName}`;
-            document.getElementById('qrModal').style.display = 'block';
+            }, 500);
         }
 
-        // Close QR modal
-        function closeQRModal() {
-            document.getElementById('qrModal').style.display = 'none';
-            document.getElementById('hotelModal').style.display = 'block';
+        // Copy promo code
+        function copyPromoCode(code) {
+            navigator.clipboard.writeText(code);
+            showNotification(`Promo code "${code}" copied to clipboard!`, 'success');
         }
 
-        // Load member's checkins
-        function loadCheckins() {
-            if (!currentMember) return;
+        // Close modal
+        function closeModal() {
+            document.getElementById('hotelModal').style.display = 'none';
+        }
+
+        // Logout function
+        function logout() {
+            currentMember = null;
+            document.getElementById('dashboardContainer').style.display = 'none';
+            document.getElementById('loginContainer').style.display = 'flex';
             
-            const memberCheckins = vacationClubData.checkins.filter(c => c.memberId === currentMember.id);
-            const checkinsList = document.getElementById('checkinsList');
-            const checkinsSection = document.getElementById('checkinsSection');
+            // Clear form
+            document.getElementById('memberId').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('notification').style.display = 'none';
             
-            if (memberCheckins.length === 0) {
-                checkinsSection.style.display = 'none';
-                return;
+            showNotification('You have been logged out successfully.', 'info');
+        }
+
+        // Enter key support
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                loginMember();
             }
-            
-            checkinsSection.style.display = 'block';
-            checkinsList.innerHTML = '';
-            
-            // Show only last 5 checkins
-            const recentCheckins = memberCheckins.slice(-5).reverse();
-            
-            recentCheckins.forEach(checkin => {
-                const hotel = getHotelById(checkin.hotelId);
-                if (!hotel) return;
-                
-                const checkinCard = document.createElement('div');
-                checkinCard.className = 'checkin-card';
-                
-                checkinCard.innerHTML = `
-                    <div class="checkin-header">
-                        <h4>${hotel.name}</h4>
-                        <span class="checkin-date">${checkin.date}</span>
-                    </div>
-                    <p class="checkin-location">${hotel.location}</p>
-                    <p class="checkin-notes">${checkin.notes || 'No additional notes'}</p>
-                    <div class="checkin-footer">
-                        <span class="verified-by">Verified by: ${checkin.verifiedBy}</span>
-                    </div>
-                `;
-                
-                checkinsList.appendChild(checkinCard);
-            });
-        }
+        });
 
-        // Close modals when clicking outside
-        window.onclick = function(event) {
-            const modals = document.getElementsByClassName('modal');
-            for (let modal of modals) {
-                if (event.target == modal) {
-                    modal.style.display = 'none';
-                    if (modal.id === 'qrModal') {
-                        document.getElementById('hotelModal').style.display = 'block';
-                    }
-                }
-            }
-        }
-
-        // Demo auto-login for testing
+        // Auto-focus on member ID field
         window.onload = function() {
-            // Uncomment for auto-login during testing
+            document.getElementById('memberId').focus();
+            
+            // Auto-fill demo for testing (remove in production)
             // document.getElementById('memberId').value = 'VC-001';
             // document.getElementById('password').value = '1234';
+        };
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('hotelModal');
+            if (event.target === modal) {
+                closeModal();
+            }
         };
     </script>
 </body>
