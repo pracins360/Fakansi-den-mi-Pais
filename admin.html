@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vacation Club - Admin Panel</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Admin Login -->
+        <div id="adminLogin" class="screen">
+            <div class="login-container admin-login">
+                <div class="logo">
+                    <i class="fas fa-user-shield"></i>
+                    <h1>Vacation Club Admin</h1>
+                    <p>Founder Access Only</p>
+                </div>
+                
+                <div class="login-form">
+                    <h2>Founder Login</h2>
+                    <div class="input-group">
+                        <label for="adminPassword">Admin Password</label>
+                        <input type="password" id="adminPassword" placeholder="Enter admin password">
+                    </div>
+                    <button onclick="adminLogin()" class="btn-primary">
+                        <i class="fas fa-lock"></i> Access Admin Panel
+                    </button>
+                    
+                    <div class="demo-credentials">
+                        <p><strong>Demo Password:</strong> admin123</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard -->
+        <div id="adminDashboard" class="screen" style="display: none;">
+            <header class="admin-header">
+                <div class="header-left">
+                    <h1><i class="fas fa-user-shield"></i> Vacation Club Admin</h1>
+                    <p class="admin-subtitle">Founder Control Panel</p>
+                </div>
+                <div class="header-right">
+                    <div class="stats-summary">
+                        <span class="stat"><i class="fas fa-users"></i> <span id="totalMembers">0</span> Members</span>
+                        <span class="stat"><i class="fas fa-hotel"></i> <span id="totalHotels">0</span> Hotels</span>
+                        <span class="stat"><i class="fas fa-check-circle"></i> <span id="totalCheckins">0</span> Check-ins</span>
+                    </div>
+                    <button onclick="adminLogout()" class="btn-logout">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </header>
+
+            <main class="admin-main">
+                <!-- Tabs -->
+                <div class="admin-tabs">
+                    <button class="tab-btn active" onclick="openTab('membersTab')">
+                        <i class="fas fa-users"></i> Members
+                    </button>
+                    <button class="tab-btn" onclick="openTab('hotelsTab')">
+                        <i class="fas fa-hotel"></i> Hotels
+                    </button>
+                    <button class="tab-btn" onclick="openTab('checkinsTab')">
+                        <i class="fas fa-history"></i> Check-ins
+                    </button>
+                    <button class="tab-btn" onclick="openTab('reportsTab')">
+                        <i class="fas fa-chart-bar"></i> Reports
+                    </button>
+                    <button class="tab-btn" onclick="openTab('addMemberTab')">
+                        <i class="fas fa-user-plus"></i> Add Member
+                    </button>
+                </div>
+
+                <!-- Members Tab -->
+                <div id="membersTab" class="tab-content active">
+                    <div class="tab-header">
+                        <h2><i class="fas fa-users"></i> Member Management</h2>
+                        <div class="tab-actions">
+                            <input type="text" id="memberSearch" placeholder="Search members..." onkeyup="searchMembers()">
+                            <button onclick="exportMembers()" class="btn-secondary">
+                                <i class="fas fa-download"></i> Export
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="members-table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Member ID</th>
+                                    <th>Name</th>
+                                    <th>Status</th>
+                                    <th>Paid</th>
+                                    <th>Join Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="membersTable">
+                                <!-- Members will load here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Hotels Tab -->
+                <div id="hotelsTab" class="tab-content">
+                    <div class="tab-header">
+                        <h2><i class="fas fa-hotel"></i> Partner Hotels</h2>
+                        <button onclick="showAddHotelModal()" class="btn-primary">
+                            <i class="fas fa-plus"></i> Add Hotel
+                        </button>
+                    </div>
+                    
+                    <div class="hotels-grid-admin">
+                        <!-- Hotels will load here -->
+                    </div>
+                </div>
+
+                <!-- Check-ins Tab -->
+                <div id="checkinsTab" class="tab-content">
+                    <div class="tab-header">
+                        <h2><i class="fas fa-history"></i> All Check-ins</h2>
+                        <div class="date-filter">
+                            <input type="date" id="filterDateFrom">
+                            <input type="date" id="filterDateTo">
+                            <button onclick="filterCheckins()" class="btn-secondary">Filter</button>
+                        </div>
+                    </div>
+                    
+                    <div class="checkins-table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Member</th>
+                                    <th>Hotel</th>
+                                    <th>Promo Used</th>
+                                    <th>Verified By</th>
+                                    <th>Notes</th>
+                                </tr>
+                            </thead>
+                            <tbody id="checkinsTable">
+                                <!-- Check-ins will load here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Reports Tab -->
+                <div id="reportsTab" class="tab-content">
+                    <h2><i class="fas fa-chart-bar"></i> Reports & Analytics</h2>
+                    
+                    <div class="reports-grid">
+                        <div class="report-card">
+                            <h3><i class="fas fa-calendar"></i> Monthly Check-ins</h3>
+                            <div class="chart-placeholder">
+                                <!-- Simple chart would go here -->
+                                <p>Chart: Monthly activity</p>
+                            </div>
+                        </div>
+                        
+                        <div class="report-card">
+                            <h3><i class="fas fa-star"></i> Most Popular Hotels</h3>
+                            <div id="popularHotels">
+                                <!-- Popular hotels list -->
+                            </div>
+                        </div>
+                        
+                        <div class="report-card">
+                            <h3><i class="fas fa-money-check-alt"></i> Payment Status</h3>
+                            <div class="payment-stats">
+                                <p>Paid Members: <span id="paidCount">0</span></p>
+                                <p>Pending Payments: <span id="pendingCount">0</span></p>
+                                <p>Revenue: $<span id="revenueAmount">0</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add Member Tab -->
+                <div id="addMemberTab" class="tab-content">
+                    <h2><i class="fas fa-user-plus"></i> Add New Member</h2>
+                    
+                    <div class="add-member-form">
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="newFirstName">First Name *</label>
+                                <input type="text" id="newFirstName" placeholder="John">
+                            </div>
+                            <div class="input-group">
+                                <label for="newLastName">Last Name *</label>
+                                <input type="text" id="newLastName" placeholder="Smith">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="newEmail">Email</label>
+                                <input type="email" id="newEmail" placeholder="john@email.com">
+                            </div>
+                            <div class="input-group">
+                                <label for="newPhone">Phone</label>
+                                <input type="tel" id="newPhone" placeholder="+1234567890">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="newPassword">PIN (4 digits)</label>
+                                <input type="text" id="newPassword" maxlength="4" placeholder="1234">
+                            </div>
+                            <div class="input-group">
+                                <label for="newStatus">Status</label>
+                                <select id="newStatus">
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="newNotes">Notes</label>
+                                <textarea id="newNotes" placeholder="Any additional notes..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="newIsPaid"> Member has paid
+                            </label>
+                            <button onclick="addNewMember()" class="btn-success">
+                                <i class="fas fa-save"></i> Add Member
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Add Hotel Modal -->
+    <div id="addHotelModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Hotel</h2>
+                <button class="close-modal" onclick="closeAddHotelModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Similar form for adding hotels -->
+                <p>Hotel addition form would go here...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script>
+        // Admin functions
+        function adminLogin() {
+            const password = document.getElementById('adminPassword').value;
+            
+            // Simple password check
+            if (password === 'admin123') {
+                document.getElementById('adminLogin').style.display = 'none';
+                document.getElementById('adminDashboard').style.display = 'block';
+                loadAdminData();
+            } else {
+                alert('Invalid admin password');
+            }
+        }
+
+        function adminLogout() {
+            document.getElementById('adminDashboard').style.display = 'none';
+            document.getElementById('adminLogin').style.display = 'block';
+            document.getElementById('adminPassword').value = '';
+        }
+
+        function loadAdminData() {
+            // Update stats
+            document.getElementById('totalMembers').textContent = vacationClubData.members.length;
+            document.getElementById('totalHotels').textContent = vacationClubData.hotels.length;
+            document.getElementById('totalCheckins').textContent = vacationClubData.checkins.length;
+            
+            // Load members table
+            loadMembersTable();
+            
+            // Load hotels
+            loadHotelsAdmin();
+            
+            // Load checkins
+            loadCheckinsTable();
+            
+            // Load reports
+            loadReports();
+        }
+
+        function loadMembersTable() {
+            const table = document.getElementById('membersTable');
+            table.innerHTML = '';
+            
+            vacationClubData.members.forEach(member => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${member.id}</td>
+                    <td>${member.firstName} ${member.lastName}</td>
+                    <td>
+                        <select onchange="updateMemberStatus('${member.id}', this.value)">
+                            <option value="active" ${member.status === 'active' ? 'selected' : ''}>Active</option>
+                            <option value="inactive" ${member.status === 'inactive' ? 'selected' : ''}>Inactive</option>
+                        </select>
+                    </td>
+                    <td>
+                        <label class="checkbox-label-small">
+                            <input type="checkbox" ${member.isPaid ? 'checked' : ''} 
+                                   onchange="updateMemberPayment('${member.id}', this.checked)">
+                            Paid
+                        </label>
+                    </td>
+                    <td>${member.joinDate}</td>
+                    <td class="actions-cell">
+                        <button onclick="editMember('${member.id}')" class="btn-icon">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button onclick="deleteMember('${member.id}')" class="btn-icon btn-danger">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                
+                table.appendChild(row);
+            });
+        }
+
+        function updateMemberStatus(memberId, status) {
+            const member = vacationClubData.members.find(m => m.id === memberId);
+            if (member) {
+                member.status = status;
+                alert(`Member ${memberId} status updated to ${status}`);
+            }
+        }
+
+        function updateMemberPayment(memberId, isPaid) {
+            const member = vacationClubData.members.find(m => m.id === memberId);
+            if (member) {
+                member.isPaid = isPaid;
+                alert(`Member ${memberId} payment status: ${isPaid ? 'Paid' : 'Unpaid'}`);
+            }
+        }
+
+        function addNewMember() {
+            const firstName = document.getElementById('newFirstName').value.trim();
+            const lastName = document.getElementById('newLastName').value.trim();
+            const email = document.getElementById('newEmail').value.trim();
+            const phone = document.getElementById('newPhone').value.trim();
+            const password = document.getElementById('newPassword').value.trim();
+            const status = document.getElementById('newStatus').value;
+            const isPaid = document.getElementById('newIsPaid').checked;
+            const notes = document.getElementById('newNotes').value.trim();
+            
+            if (!firstName || !lastName) {
+                alert('First and last name are required');
+                return;
+            }
+            
+            // Generate new member ID
+            const newId = "VC-" + (vacationClubData.members.length + 1).toString().padStart(3, '0');
+            
+            const newMember = {
+                id: newId,
+                firstName,
+                lastName,
+                email,
+                phone,
+                joinDate: new Date().toISOString().split('T')[0],
+                status,
+                isPaid,
+                password: password || "1234",
+                notes
+            };
+            
+            vacationClubData.members.push(newMember);
+            alert(`New member added: ${newId}`);
+            
+            // Clear form
+            document.getElementById('newFirstName').value = '';
+            document.getElementById('newLastName').value = '';
+            document.getElementById('newEmail').value = '';
+            document.getElementById('newPhone').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('newNotes').value = '';
+            document.getElementById('newIsPaid').checked = false;
+            
+            // Reload table
+            loadMembersTable();
+            document.getElementById('totalMembers').textContent = vacationClubData.members.length;
+        }
+
+        function openTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active from all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Mark button as active
+            event.currentTarget.classList.add('active');
+        }
+
+        // Tab switching is already handled by openTab function
+
+        // Initialize on load
+        window.onload = function() {
+            // Auto-login for testing
+            // document.getElementById('adminPassword').value = 'admin123';
+            // adminLogin();
+        };
+    </script>
+</body>
+</html>

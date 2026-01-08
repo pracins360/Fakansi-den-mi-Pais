@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vacation Club - Member Portal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="screen">
+        <div class="login-container">
+            <div class="logo">
+                <i class="fas fa-umbrella-beach"></i>
+                <h1>Vacation Club</h1>
+                <p>Your exclusive access to premium hotel deals</p>
+            </div>
+            
+            <div class="login-form">
+                <h2>Member Login</h2>
+                <div class="input-group">
+                    <label for="memberId">Member ID</label>
+                    <input type="text" id="memberId" placeholder="VC-001">
+                </div>
+                <div class="input-group">
+                    <label for="password">PIN (4 digits)</label>
+                    <input type="password" id="password" maxlength="4" placeholder="1234">
+                </div>
+                <button onclick="login()" class="btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Enter Club
+                </button>
+                
+                <div class="demo-credentials">
+                    <p><strong>Demo Login:</strong> VC-001 / 1234</p>
+                    <p><strong>Or:</strong> VC-002 / 2345</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Member Dashboard -->
+    <div id="dashboard" class="screen" style="display: none;">
+        <header class="dashboard-header">
+            <div class="header-left">
+                <h1><i class="fas fa-crown"></i> Vacation Club</h1>
+                <p class="member-greeting">Welcome, <span id="memberName"></span></p>
+            </div>
+            <div class="header-right">
+                <div class="member-info">
+                    <span id="memberIdDisplay"></span>
+                    <span class="status-badge active">Active Member</span>
+                </div>
+                <button onclick="logout()" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </header>
+
+        <main class="dashboard-main">
+            <!-- Available Hotels Section -->
+            <section class="section">
+                <h2><i class="fas fa-hotel"></i> Partner Hotels</h2>
+                <p class="section-subtitle">Click on any hotel to see exclusive promotions</p>
+                
+                <div class="hotels-grid" id="hotelsGrid">
+                    <!-- Hotels will be dynamically loaded here -->
+                </div>
+            </section>
+
+            <!-- My Check-ins Section -->
+            <section class="section" id="checkinsSection">
+                <h2><i class="fas fa-calendar-check"></i> My Recent Check-ins</h2>
+                <div class="checkins-list" id="checkinsList">
+                    <!-- Check-ins will be loaded here -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Hotel Details Modal -->
+    <div id="hotelModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalHotelName"></h2>
+                <button class="close-modal" onclick="closeHotelModal()">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="hotel-info">
+                    <div class="hotel-header">
+                        <img id="modalHotelLogo" src="" alt="Hotel Logo" class="hotel-logo-large">
+                        <div>
+                            <p id="modalHotelLocation" class="hotel-location"></p>
+                            <p id="modalHotelDescription" class="hotel-description"></p>
+                        </div>
+                    </div>
+                    
+                    <!-- Promotions -->
+                    <div class="promotions-section">
+                        <h3><i class="fas fa-tag"></i> Available Promotions</h3>
+                        <div id="promotionsList" class="promotions-list">
+                            <!-- Promos will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Booking Instructions -->
+                    <div class="booking-section">
+                        <h3><i class="fas fa-phone-alt"></i> How to Book</h3>
+                        <div class="booking-instructions">
+                            <div class="instruction-step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <strong>Call or Visit Website</strong>
+                                    <p id="modalBookingPhone"></p>
+                                    <p id="modalBookingWebsite"></p>
+                                    <small id="modalBookingNote"></small>
+                                </div>
+                            </div>
+                            
+                            <div class="instruction-step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <strong>Get Verification</strong>
+                                    <p>Mention you're a Vacation Club member. Hotel staff will verify your membership.</p>
+                                    <button onclick="showVerificationInfo()" class="btn-secondary">
+                                        <i class="fas fa-qrcode"></i> Show My Verification QR
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="instruction-step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <strong>Complete Booking</strong>
+                                    <p>After verification, use the promotion and complete your booking normally.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Code Modal -->
+    <div id="qrModal" class="modal">
+        <div class="modal-content qr-modal">
+            <div class="modal-header">
+                <h3>Membership Verification</h3>
+                <button class="close-modal" onclick="closeQRModal()">&times;</button>
+            </div>
+            <div class="modal-body text-center">
+                <p>Show this to hotel staff for verification:</p>
+                <div id="qrcode" class="qr-container"></div>
+                <p class="member-id-display" id="qrMemberId"></p>
+                <p class="member-name-display" id="qrMemberName"></p>
+                <div class="verification-instructions">
+                    <p><i class="fas fa-info-circle"></i> Hotel staff will scan this code to verify your membership and apply your discount.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script>
+        // Current logged in member
+        let currentMember = null;
+        let currentHotel = null;
+
+        // Login function
+        function login() {
+            const memberId = document.getElementById('memberId').value.trim().toUpperCase();
+            const password = document.getElementById('password').value;
+            
+            // Find member
+            const member = vacationClubData.members.find(m => 
+                m.id === memberId && m.password === password && m.status === 'active'
+            );
+            
+            if (member) {
+                currentMember = member;
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                
+                // Update UI
+                document.getElementById('memberName').textContent = `${member.firstName} ${member.lastName}`;
+                document.getElementById('memberIdDisplay').textContent = member.id;
+                
+                // Load hotels and checkins
+                loadHotels();
+                loadCheckins();
+            } else {
+                alert('Invalid login or inactive account. Please check your Member ID and PIN.');
+            }
+        }
+
+        // Logout function
+        function logout() {
+            currentMember = null;
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('loginScreen').style.display = 'block';
+            document.getElementById('memberId').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        // Load hotels
+        function loadHotels() {
+            const hotelsGrid = document.getElementById('hotelsGrid');
+            hotelsGrid.innerHTML = '';
+            
+            vacationClubData.hotels.forEach(hotel => {
+                const hotelCard = document.createElement('div');
+                hotelCard.className = 'hotel-card';
+                hotelCard.onclick = () => openHotelModal(hotel.id);
+                
+                hotelCard.innerHTML = `
+                    <div class="hotel-card-header">
+                        <img src="${hotel.logo || 'default-hotel.png'}" alt="${hotel.name}" class="hotel-logo">
+                        <div class="hotel-card-info">
+                            <h3>${hotel.name}</h3>
+                            <p class="hotel-location-card">${hotel.location}</p>
+                            <span class="promo-count">${hotel.promos.length} promotion${hotel.promos.length !== 1 ? 's' : ''}</span>
+                        </div>
+                    </div>
+                    <div class="hotel-card-footer">
+                        <span class="view-promos-btn">
+                            View Promotions <i class="fas fa-chevron-right"></i>
+                        </span>
+                    </div>
+                `;
+                
+                hotelsGrid.appendChild(hotelCard);
+            });
+        }
+
+        // Open hotel modal
+        function openHotelModal(hotelId) {
+            currentHotel = vacationClubData.hotels.find(h => h.id === hotelId);
+            
+            document.getElementById('modalHotelName').textContent = currentHotel.name;
+            document.getElementById('modalHotelLocation').textContent = currentHotel.location;
+            document.getElementById('modalHotelDescription').textContent = currentHotel.description;
+            document.getElementById('modalHotelLogo').src = currentHotel.logo || 'default-hotel.png';
+            document.getElementById('modalBookingPhone').innerHTML = `<i class="fas fa-phone"></i> ${currentHotel.booking.phone}`;
+            document.getElementById('modalBookingWebsite').innerHTML = `<i class="fas fa-globe"></i> <a href="${currentHotel.booking.website}" target="_blank">${currentHotel.booking.website}</a>`;
+            document.getElementById('modalBookingNote').textContent = currentHotel.booking.note;
+            
+            // Load promotions
+            const promotionsList = document.getElementById('promotionsList');
+            promotionsList.innerHTML = '';
+            
+            currentHotel.promos.forEach(promo => {
+                const isActive = new Date(promo.validTo) >= new Date();
+                
+                const promoCard = document.createElement('div');
+                promoCard.className = `promo-card ${isActive ? 'active' : 'expired'}`;
+                
+                promoCard.innerHTML = `
+                    <div class="promo-header">
+                        <h4>${promo.title}</h4>
+                        <span class="promo-status">${isActive ? 'Valid' : 'Expired'}</span>
+                    </div>
+                    <p class="promo-description">${promo.description}</p>
+                    <div class="promo-details">
+                        <p><i class="far fa-calendar"></i> Valid: ${promo.validFrom} to ${promo.validTo}</p>
+                        <p><i class="fas fa-info-circle"></i> ${promo.instructions}</p>
+                        ${promo.promoCode ? `<p class="promo-code"><strong>Promo Code:</strong> <code>${promo.promoCode}</code></p>` : ''}
+                    </div>
+                `;
+                
+                promotionsList.appendChild(promoCard);
+            });
+            
+            document.getElementById('hotelModal').style.display = 'block';
+        }
+
+        // Close hotel modal
+        function closeHotelModal() {
+            document.getElementById('hotelModal').style.display = 'none';
+            currentHotel = null;
+        }
+
+        // Show QR code for verification
+        function showVerificationInfo() {
+            document.getElementById('hotelModal').style.display = 'none';
+            
+            // Generate QR code with member data
+            const qrData = JSON.stringify({
+                memberId: currentMember.id,
+                memberName: `${currentMember.firstName} ${currentMember.lastName}`,
+                timestamp: new Date().toISOString(),
+                hotelId: currentHotel?.id
+            });
+            
+            const qrContainer = document.getElementById('qrcode');
+            qrContainer.innerHTML = '';
+            
+            QRCode.toCanvas(qrContainer, qrData, {
+                width: 200,
+                margin: 2,
+                color: {
+                    dark: '#2c3e50',
+                    light: '#ffffff'
+                }
+            }, function(error) {
+                if (error) console.error(error);
+            });
+            
+            document.getElementById('qrMemberId').textContent = currentMember.id;
+            document.getElementById('qrMemberName').textContent = `${currentMember.firstName} ${currentMember.lastName}`;
+            document.getElementById('qrModal').style.display = 'block';
+        }
+
+        // Close QR modal
+        function closeQRModal() {
+            document.getElementById('qrModal').style.display = 'none';
+            document.getElementById('hotelModal').style.display = 'block';
+        }
+
+        // Load member's checkins
+        function loadCheckins() {
+            if (!currentMember) return;
+            
+            const memberCheckins = vacationClubData.checkins.filter(c => c.memberId === currentMember.id);
+            const checkinsList = document.getElementById('checkinsList');
+            const checkinsSection = document.getElementById('checkinsSection');
+            
+            if (memberCheckins.length === 0) {
+                checkinsSection.style.display = 'none';
+                return;
+            }
+            
+            checkinsSection.style.display = 'block';
+            checkinsList.innerHTML = '';
+            
+            // Show only last 5 checkins
+            const recentCheckins = memberCheckins.slice(-5).reverse();
+            
+            recentCheckins.forEach(checkin => {
+                const hotel = getHotelById(checkin.hotelId);
+                if (!hotel) return;
+                
+                const checkinCard = document.createElement('div');
+                checkinCard.className = 'checkin-card';
+                
+                checkinCard.innerHTML = `
+                    <div class="checkin-header">
+                        <h4>${hotel.name}</h4>
+                        <span class="checkin-date">${checkin.date}</span>
+                    </div>
+                    <p class="checkin-location">${hotel.location}</p>
+                    <p class="checkin-notes">${checkin.notes || 'No additional notes'}</p>
+                    <div class="checkin-footer">
+                        <span class="verified-by">Verified by: ${checkin.verifiedBy}</span>
+                    </div>
+                `;
+                
+                checkinsList.appendChild(checkinCard);
+            });
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const modals = document.getElementsByClassName('modal');
+            for (let modal of modals) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                    if (modal.id === 'qrModal') {
+                        document.getElementById('hotelModal').style.display = 'block';
+                    }
+                }
+            }
+        }
+
+        // Demo auto-login for testing
+        window.onload = function() {
+            // Uncomment for auto-login during testing
+            // document.getElementById('memberId').value = 'VC-001';
+            // document.getElementById('password').value = '1234';
+        };
+    </script>
+</body>
+</html>
