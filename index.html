@@ -2,10 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vacation Club | Member Login</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -542,7 +538,7 @@
             box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
         }
 
-        /* Modal Styles */
+        /* Modal Styles - ALLE MODALS MOETEN HIDDEN ZIJN */
         .modal {
             display: none;
             position: fixed;
@@ -668,53 +664,7 @@
             flex-shrink: 0;
         }
 
-        /* Report Form Styles */
-        .report-form {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            margin-top: 20px;
-        }
-        
-        .report-form textarea {
-            width: 100%;
-            min-height: 100px;
-            padding: 15px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            margin: 10px 0;
-            font-family: inherit;
-            resize: vertical;
-        }
-        
-        .report-reasons {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 10px;
-            margin: 15px 0;
-        }
-        
-        .reason-btn {
-            padding: 12px;
-            border: 2px solid #e2e8f0;
-            background: #f8fafc;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.3s;
-        }
-        
-        .reason-btn:hover {
-            border-color: #4f46e5;
-            background: #eef2ff;
-        }
-        
-        .reason-btn.selected {
-            background: #4f46e5;
-            color: white;
-            border-color: #4f46e5;
-        }
-        
+        /* Admin Info */
         .admin-info {
             position: fixed;
             bottom: 20px;
@@ -788,7 +738,7 @@
     </style>
 </head>
 <body>
-    <!-- Main Login Container (ALTIJD ZICHTBAAR BIJ START) -->
+    <!-- Main Login Container -->
     <div class="container" id="loginContainer">
         <!-- Left Panel - Hero -->
         <div class="hero-panel">
@@ -823,23 +773,23 @@
                         <div class="feature-icon">
                             <i class="fas fa-shield-alt"></i>
                         </div>
-                        <span>Real-time Updates</span>
+                        <span>Secure Access</span>
                     </div>
                     <div class="feature-item">
                         <div class="feature-icon">
                             <i class="fas fa-headset"></i>
                         </div>
-                        <span>Hotel Support</span>
+                        <span>24/7 Support</span>
                     </div>
                 </div>
             </div>
             
-            <!-- Admin Info (alleen voor admin zichtbaar) -->
+            <!-- Admin Info -->
             <div class="admin-info" id="adminInfo">
                 <p><strong>🔧 Admin Mode</strong></p>
-                <p>Sheet: <a href="#" id="sheetLink" target="_blank">Open Google Sheet</a></p>
-                <p>Members: <span id="memberCount">0</span> • Hotels: <span id="hotelCount">0</span></p>
-                <p><small>Last sync: <span id="lastSync">--:--</span></small></p>
+                <p><a href="#" id="sheetLink" target="_blank">Open Google Sheet</a></p>
+                <p>Members: <span id="memberCount">0</span></p>
+                <p>Hotels: <span id="hotelCount">0</span></p>
             </div>
         </div>
 
@@ -903,7 +853,7 @@
         </div>
     </div>
 
-    <!-- Dashboard Container (HIDDEN by default) -->
+    <!-- Dashboard Container (Hidden) -->
     <div class="dashboard-container" id="dashboardContainer">
         <div class="dashboard-header">
             <div class="member-info">
@@ -931,22 +881,18 @@
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
                 <h2 class="section-title">Partner Hotels & Resorts</h2>
                 <div style="color: #64748b; font-size: 14px;">
-                    <i class="fas fa-database"></i> 
-                    <span id="hotelCountBadge">Loading hotels...</span>
+                    <i class="fas fa-hotel"></i> 
+                    <span id="hotelCountBadge">Hotels loading...</span>
                 </div>
             </div>
             
             <div class="hotels-grid" id="hotelsGrid">
-                <!-- Hotels will be loaded here -->
-                <div style="text-align: center; padding: 40px; color: #64748b;">
-                    <i class="fas fa-spinner fa-spin" style="font-size: 24px; margin-bottom: 15px;"></i>
-                    <p>Loading hotels from Google Sheets...</p>
-                </div>
+                <!-- Hotels will load here -->
             </div>
         </div>
     </div>
 
-    <!-- Hotel Details Modal (HIDDEN by default) -->
+    <!-- Hotel Details Modal (Hidden) -->
     <div class="modal" id="hotelModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -955,13 +901,13 @@
             </div>
             <div class="modal-body">
                 <div id="modalContent">
-                    <!-- Content loaded dynamically -->
+                    <!-- Content loaded here -->
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Hotel Login Modal (HIDDEN by default) -->
+    <!-- Hotel Login Modal (Hidden) -->
     <div class="modal" id="hotelLoginModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -992,15 +938,15 @@
                     </button>
                     
                     <div class="demo-info" style="margin-top: 20px;">
-                        <h4><i class="fas fa-info-circle"></i> For Hotel Partners</h4>
-                        <p>Use credentials provided by Vacation Club admin to report member issues.</p>
+                        <h4><i class="fas fa-info-circle"></i> Hotel Partner Access</h4>
+                        <p>Use credentials provided by Vacation Club admin.</p>
                         <div class="demo-credentials">
                             <div class="credential-item">
-                                <span>Demo Hotel ID:</span>
+                                <span>Demo Hotel:</span>
                                 <span class="password">HOTEL-001</span>
                             </div>
                             <div class="credential-item">
-                                <span>Demo Password:</span>
+                                <span>Demo Pass:</span>
                                 <span class="password">hotel123</span>
                             </div>
                         </div>
@@ -1010,7 +956,7 @@
         </div>
     </div>
 
-    <!-- Report Member Modal (HIDDEN by default) -->
+    <!-- Report Modal (Hidden) -->
     <div class="modal" id="reportModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -1019,7 +965,7 @@
             </div>
             <div class="modal-body">
                 <div id="reportContent">
-                    <!-- Report form loaded here -->
+                    <!-- Report form -->
                 </div>
             </div>
         </div>
@@ -1027,13 +973,10 @@
 
     <script>
         // ==================== CONFIGURATION ====================
-        // VERVANG DIT MET JE EIGEN GOOGLE SHEETS WEB APP URL
         const GOOGLE_SHEETS_API = 'https://script.google.com/macros/s/AKfycbzPt_5M4qZTvKlYIpPtKp5u2AeEWiu1N5Pq2QUf7a0kuB9BIMwy3_sQ5MDbbq44_qoK/exec';
-        
-        // Admin credentials
         const ADMIN_MODE_PASSWORD = 'admin123';
         
-        // Data cache
+        // Data storage
         let clubData = {
             members: [],
             hotels: [],
@@ -1044,7 +987,7 @@
         let currentHotel = null;
         let isAdminMode = false;
 
-        // ==================== HELPER FUNCTIES ====================
+        // ==================== HELPER FUNCTIONS ====================
         
         function showNotification(message, type = 'info') {
             const notification = document.getElementById('notification');
@@ -1079,7 +1022,7 @@
             document.getElementById('reportModal').style.display = 'none';
         }
         
-        // ==================== GOOGLE SHEETS INTEGRATION ====================
+        // ==================== GOOGLE SHEETS ====================
         
         async function fetchFromGoogleSheets(action, params = {}) {
             try {
@@ -1092,37 +1035,28 @@
                 
                 url.searchParams.append('_t', Date.now());
                 
-                console.log('Fetching from:', url.toString());
                 const response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
-                const data = await response.json();
-                console.log('Response data:', data);
-                return data;
-                
+                return await response.json();
             } catch (error) {
-                console.error('Google Sheets fetch error:', error);
-                showNotification('Connection error. Using demo data.', 'error');
+                console.error('Google Sheets error:', error);
                 return null;
             }
         }
         
         async function loadClubData() {
-            showNotification('Loading data from Google Sheets...', 'info');
+            showNotification('Loading data...', 'info');
             
             // Fallback demo data
             const demoMembers = [
                 {id: "VC-001", firstName: "John", lastName: "Smith", password: "1234", status: "active", isPaid: true, joinDate: "2024-01-15"},
-                {id: "VC-002", firstName: "Maria", lastName: "Garcia", password: "2345", status: "active", isPaid: true, joinDate: "2024-02-01"},
-                {id: "VC-003", firstName: "David", lastName: "Chen", password: "3456", status: "suspended", isPaid: false, joinDate: "2024-02-15"}
+                {id: "VC-002", firstName: "Maria", lastName: "Garcia", password: "2345", status: "active", isPaid: true, joinDate: "2024-02-01"}
             ];
             
             const demoHotels = [
-                {id: "HOTEL-001", name: "Sunset Resort & Spa", location: "Bali, Indonesia", description: "Luxury beachfront resort", discount: "40% off villas", promoCode: "VCSUNSET40", instructions: "Call +62 361 777 888", contact: "Mr. Wayan", phone: "+62 361 777 888", email: "bookings@sunset.com"},
-                {id: "HOTEL-002", name: "Alpine Mountain Lodge", location: "Swiss Alps", description: "Ski-in/ski-out luxury lodge", discount: "35% off suites", promoCode: "VCALPINE35", instructions: "Email with confirmation", contact: "Ms. Müller", phone: "+41 27 967 1234", email: "reservations@alpine.ch"}
+                {id: "HOTEL-001", name: "Sunset Resort", location: "Bali, Indonesia", description: "Luxury beachfront resort", discount: "40% off", promoCode: "VCSUNSET40", phone: "+62 361 777 888"},
+                {id: "HOTEL-002", name: "Alpine Lodge", location: "Swiss Alps", description: "Ski-in/ski-out luxury", discount: "35% off", promoCode: "VCALPINE35", phone: "+41 27 967 1234"}
             ];
             
             try {
@@ -1131,1040 +1065,13 @@
                     fetchFromGoogleSheets('getHotels')
                 ]);
                 
-                // Use Google Sheets data if available, otherwise use demo data
                 clubData.members = (membersData && !membersData.error) ? membersData : demoMembers;
-                clubData.hotels = (hotelsData && !="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vacation Club | Member Login</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* [Behoud al je bestaande CSS - hetzelfde als voorheen] */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #1a237e 0%, #311b92 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            color: #333;
-        }
-
-        /* ... [ALLE BESTAANDE CSS BEHOUDEN] ... */
-        
-        /* Report Modal Styles */
-        .report-form {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            margin-top: 20px;
-        }
-        
-        .report-form textarea {
-            width: 100%;
-            min-height: 100px;
-            padding: 15px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            margin: 10px 0;
-            font-family: inherit;
-            resize: vertical;
-        }
-        
-        .report-reasons {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 10px;
-            margin: 15px 0;
-        }
-        
-        .reason-btn {
-            padding: 12px;
-            border: 2px solid #e2e8f0;
-            background: #f8fafc;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.3s;
-        }
-        
-        .reason-btn:hover {
-            border-color: #4f46e5;
-            background: #eef2ff;
-        }
-        
-        .reason-btn.selected {
-            background: #4f46e5;
-            color: white;
-            border-color: #4f46e5;
-        }
-        
-        .admin-info {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: white;
-            padding: 15px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            font-size: 14px;
-            z-index: 1000;
-        }
-        
-        .admin-info a {
-            color: #4f46e5;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .admin-info a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-    <!-- Login Container -->
-    <div class="container" id="loginContainer">
-        <!-- Left Panel - Hero -->
-        <div class="hero-panel">
-            <div class="logo">
-                <div class="logo-icon">
-                    <i class="fas fa-umbrella-beach"></i>
-                </div>
-                <div class="logo-text">
-                    <h1>Vacation Club</h1>
-                    <p>Exclusive Travel Experiences</p>
-                </div>
-            </div>
-
-            <div class="hero-content">
-                <h2>Your Passport to Premium Getaways</h2>
-                <p>Access exclusive discounts at luxury hotels and resorts worldwide. Join 300+ members enjoying premium travel benefits.</p>
-                
-                <div class="features">
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-percent"></i>
-                        </div>
-                        <span>Up to 40% Discount</span>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-hotel"></i>
-                        </div>
-                        <span>30+ Partner Hotels</span>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <span>Real-time Updates</span>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-headset"></i>
-                        </div>
-                        <span>Hotel Support</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Admin Info (alleen voor jou zichtbaar) -->
-            <div class="admin-info" style="display: none;" id="adminInfo">
-                <p><strong>🔧 Admin Mode</strong></p>
-                <p>Sheet: <a href="#" id="sheetLink" target="_blank">Open Google Sheet</a></p>
-                <p>Members: <span id="memberCount">0</span> • Hotels: <span id="hotelCount">0</span></p>
-                <p><small>Last sync: <span id="lastSync">--:--</span></small></p>
-            </div>
-        </div>
-
-        <!-- Right Panel - Login -->
-        <div class="login-panel">
-            <div class="login-header">
-                <h2>Member Login</h2>
-                <p>Enter your credentials to access exclusive benefits</p>
-            </div>
-
-            <!-- Notification Area -->
-            <div id="notification" class="notification"></div>
-
-            <div class="login-form">
-                <div class="form-group">
-                    <label class="form-label" for="memberId">Member ID</label>
-                    <div class="input-with-icon">
-                        <i class="fas fa-user-tag"></i>
-                        <input type="text" id="memberId" class="form-input" placeholder="VC-001" autocomplete="off">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="password">Password</label>
-                    <div class="input-with-icon">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="password" class="form-input" placeholder="Enter your 4-digit PIN" maxlength="4">
-                    </div>
-                </div>
-
-                <button class="signin-btn" onclick="loginMember()">
-                    <i class="fas fa-sign-in-alt"></i>
-                    Sign In
-                </button>
-
-                <div class="demo-info">
-                    <h4><i class="fas fa-info-circle"></i> Real-time Data</h4>
-                    <p>All data loaded from Google Sheets. Updates instantly.</p>
-                    
-                    <div class="demo-credentials">
-                        <div class="credential-item">
-                            <span>Data Source:</span>
-                            <span class="password">Google Sheets API</span>
-                        </div>
-                        <div class="credential-item">
-                            <span>Last Updated:</span>
-                            <span class="password" id="dataTimestamp">Loading...</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-links">
-                <p>Hotel Partner? <a href="#" onclick="showHotelLogin()">Report Issue</a></p>
-                <p style="margin-top: 10px;">© 2024 Vacation Club. All rights reserved.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Dashboard Container -->
-    <div class="dashboard-container" id="dashboardContainer">
-        <div class="dashboard-header">
-            <div class="member-info">
-                <div class="member-avatar">
-                    <i class="fas fa-user"></i>
-                </div>
-                <div class="member-details">
-                    <h3 id="dashboardMemberName">Loading...</h3>
-                    <p id="dashboardMemberId">• • •</p>
-                </div>
-            </div>
-            <div style="display: flex; gap: 10px;">
-                <button class="logout-btn" onclick="refreshData()" style="background: rgba(255,255,255,0.05);">
-                    <i class="fas fa-sync-alt"></i>
-                    Refresh
-                </button>
-                <button class="logout-btn" onclick="logout()">
-                    <i class="fas fa-sign-out-alt"></i>
-                    Logout
-                </button>
-            </div>
-        </div>
-
-        <div class="dashboard-content">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                <h2 class="section-title">Partner Hotels & Resorts</h2>
-                <div style="color: #64748b; font-size: 14px;">
-                    <i class="fas fa-database"></i> 
-                    <span id="hotelCountBadge">Loading hotels...</span>
-                </div>
-            </div>
-            
-            <div class="hotels-grid" id="hotelsGrid">
-                <!-- Hotels loaded from Google Sheets -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Hotel Details Modal -->
-    <div class="modal" id="hotelModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalHotelName">Hotel Details</h3>
-                <button class="close-modal" onclick="closeModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div id="modalContent">
-                    <!-- Content loaded dynamically -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Hotel Login Modal (for reporting) -->
-    <div class="modal" id="hotelLoginModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-hotel"></i> Hotel Partner Login</h3>
-                <button class="close-modal" onclick="closeHotelLogin()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="login-form">
-                    <div class="form-group">
-                        <label class="form-label">Hotel ID</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-hotel"></i>
-                            <input type="text" id="hotelIdInput" class="form-input" placeholder="HOTEL-001">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Hotel Password</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-lock"></i>
-                            <input type="password" id="hotelPassword" class="form-input" placeholder="Hotel access code">
-                        </div>
-                    </div>
-                    
-                    <button class="signin-btn" onclick="hotelLogin()">
-                        <i class="fas fa-sign-in-alt"></i>
-                        Hotel Login
-                    </button>
-                    
-                    <div class="demo-info" style="margin-top: 20px;">
-                        <h4><i class="fas fa-info-circle"></i> Note for Hotel Partners</h4>
-                        <p>Use credentials provided by Vacation Club admin to report member issues.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Report Member Modal -->
-    <div class="modal" id="reportModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-flag"></i> Report Member</h3>
-                <button class="close-modal" onclick="closeReportModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div id="reportContent">
-                    <!-- Report form loaded here -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // ==================== CONFIGURATION ====================
-        // VERVANG DIT MET JE EIGEN GOOGLE SHEETS WEB APP URL
-        const GOOGLE_SHEETS_API = '<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vacation Club | Member Login</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* [Behoud al je bestaande CSS - hetzelfde als voorheen] */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #1a237e 0%, #311b92 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            color: #333;
-        }
-
-        /* ... [ALLE BESTAANDE CSS BEHOUDEN] ... */
-        
-        /* Report Modal Styles */
-        .report-form {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            margin-top: 20px;
-        }
-        
-        .report-form textarea {
-            width: 100%;
-            min-height: 100px;
-            padding: 15px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            margin: 10px 0;
-            font-family: inherit;
-            resize: vertical;
-        }
-        
-        .report-reasons {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 10px;
-            margin: 15px 0;
-        }
-        
-        .reason-btn {
-            padding: 12px;
-            border: 2px solid #e2e8f0;
-            background: #f8fafc;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.3s;
-        }
-        
-        .reason-btn:hover {
-            border-color: #4f46e5;
-            background: #eef2ff;
-        }
-        
-        .reason-btn.selected {
-            background: #4f46e5;
-            color: white;
-            border-color: #4f46e5;
-        }
-        
-        .admin-info {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: white;
-            padding: 15px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            font-size: 14px;
-            z-index: 1000;
-        }
-        
-        .admin-info a {
-            color: #4f46e5;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .admin-info a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-    <!-- Login Container -->
-    <div class="container" id="loginContainer">
-        <!-- Left Panel - Hero -->
-        <div class="hero-panel">
-            <div class="logo">
-                <div class="logo-icon">
-                    <i class="fas fa-umbrella-beach"></i>
-                </div>
-                <div class="logo-text">
-                    <h1>Vacation Club</h1>
-                    <p>Exclusive Travel Experiences</p>
-                </div>
-            </div>
-
-            <div class="hero-content">
-                <h2>Your Passport to Premium Getaways</h2>
-                <p>Access exclusive discounts at luxury hotels and resorts worldwide. Join 300+ members enjoying premium travel benefits.</p>
-                
-                <div class="features">
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-percent"></i>
-                        </div>
-                        <span>Up to 40% Discount</span>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-hotel"></i>
-                        </div>
-                        <span>30+ Partner Hotels</span>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <span>Real-time Updates</span>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-headset"></i>
-                        </div>
-                        <span>Hotel Support</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Admin Info (alleen voor jou zichtbaar) -->
-            <div class="admin-info" style="display: none;" id="adminInfo">
-                <p><strong>🔧 Admin Mode</strong></p>
-                <p>Sheet: <a href="#" id="sheetLink" target="_blank">Open Google Sheet</a></p>
-                <p>Members: <span id="memberCount">0</span> • Hotels: <span id="hotelCount">0</span></p>
-                <p><small>Last sync: <span id="lastSync">--:--</span></small></p>
-            </div>
-        </div>
-
-        <!-- Right Panel - Login -->
-        <div class="login-panel">
-            <div class="login-header">
-                <h2>Member Login</h2>
-                <p>Enter your credentials to access exclusive benefits</p>
-            </div>
-
-            <!-- Notification Area -->
-            <div id="notification" class="notification"></div>
-
-            <div class="login-form">
-                <div class="form-group">
-                    <label class="form-label" for="memberId">Member ID</label>
-                    <div class="input-with-icon">
-                        <i class="fas fa-user-tag"></i>
-                        <input type="text" id="memberId" class="form-input" placeholder="VC-001" autocomplete="off">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="password">Password</label>
-                    <div class="input-with-icon">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="password" class="form-input" placeholder="Enter your 4-digit PIN" maxlength="4">
-                    </div>
-                </div>
-
-                <button class="signin-btn" onclick="loginMember()">
-                    <i class="fas fa-sign-in-alt"></i>
-                    Sign In
-                </button>
-
-                <div class="demo-info">
-                    <h4><i class="fas fa-info-circle"></i> Real-time Data</h4>
-                    <p>All data loaded from Google Sheets. Updates instantly.</p>
-                    
-                    <div class="demo-credentials">
-                        <div class="credential-item">
-                            <span>Data Source:</span>
-                            <span class="password">Google Sheets API</span>
-                        </div>
-                        <div class="credential-item">
-                            <span>Last Updated:</span>
-                            <span class="password" id="dataTimestamp">Loading...</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-links">
-                <p>Hotel Partner? <a href="#" onclick="showHotelLogin()">Report Issue</a></p>
-                <p style="margin-top: 10px;">© 2024 Vacation Club. All rights reserved.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Dashboard Container -->
-    <div class="dashboard-container" id="dashboardContainer">
-        <div class="dashboard-header">
-            <div class="member-info">
-                <div class="member-avatar">
-                    <i class="fas fa-user"></i>
-                </div>
-                <div class="member-details">
-                    <h3 id="dashboardMemberName">Loading...</h3>
-                    <p id="dashboardMemberId">• • •</p>
-                </div>
-            </div>
-            <div style="display: flex; gap: 10px;">
-                <button class="logout-btn" onclick="refreshData()" style="background: rgba(255,255,255,0.05);">
-                    <i class="fas fa-sync-alt"></i>
-                    Refresh
-                </button>
-                <button class="logout-btn" onclick="logout()">
-                    <i class="fas fa-sign-out-alt"></i>
-                    Logout
-                </button>
-            </div>
-        </div>
-
-        <div class="dashboard-content">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                <h2 class="section-title">Partner Hotels & Resorts</h2>
-                <div style="color: #64748b; font-size: 14px;">
-                    <i class="fas fa-database"></i> 
-                    <span id="hotelCountBadge">Loading hotels...</span>
-                </div>
-            </div>
-            
-            <div class="hotels-grid" id="hotelsGrid">
-                <!-- Hotels loaded from Google Sheets -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Hotel Details Modal -->
-    <div class="modal" id="hotelModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalHotelName">Hotel Details</h3>
-                <button class="close-modal" onclick="closeModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div id="modalContent">
-                    <!-- Content loaded dynamically -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Hotel Login Modal (for reporting) -->
-    <div class="modal" id="hotelLoginModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-hotel"></i> Hotel Partner Login</h3>
-                <button class="close-modal" onclick="closeHotelLogin()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="login-form">
-                    <div class="form-group">
-                        <label class="form-label">Hotel ID</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-hotel"></i>
-                            <input type="text" id="hotelIdInput" class="form-input" placeholder="HOTEL-001">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Hotel Password</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-lock"></i>
-                            <input type="password" id="hotelPassword" class="form-input" placeholder="Hotel access code">
-                        </div>
-                    </div>
-                    
-                    <button class="signin-btn" onclick="hotelLogin()">
-                        <i class="fas fa-sign-in-alt"></i>
-                        Hotel Login
-                    </button>
-                    
-                    <div class="demo-info" style="margin-top: 20px;">
-                        <h4><i class="fas fa-info-circle"></i> Note for Hotel Partners</h4>
-                        <p>Use credentials provided by Vacation Club admin to report member issues.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Report Member Modal -->
-    <div class="modal" id="reportModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-flag"></i> Report Member</h3>
-                <button class="close-modal" onclick="closeReportModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div id="reportContent">
-                    <!-- Report form loaded here -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // ==================== CONFIGURATION ====================
-        // VERVANG DIT MET JE EIGEN GOOGLE SHEETS WEB APP URL
-        const GOOGLE_SHEETS_API = '<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vacation Club | Member Login</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* [Behoud al je bestaande CSS - hetzelfde als voorheen] */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #1a237e 0%, #311b92 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            color: #333;
-        }
-
-        /* ... [ALLE BESTAANDE CSS BEHOUDEN] ... */
-        
-        /* Report Modal Styles */
-        .report-form {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            margin-top: 20px;
-        }
-        
-        .report-form textarea {
-            width: 100%;
-            min-height: 100px;
-            padding: 15px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            margin: 10px 0;
-            font-family: inherit;
-            resize: vertical;
-        }
-        
-        .report-reasons {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 10px;
-            margin: 15px 0;
-        }
-        
-        .reason-btn {
-            padding: 12px;
-            border: 2px solid #e2e8f0;
-            background: #f8fafc;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.3s;
-        }
-        
-        .reason-btn:hover {
-            border-color: #4f46e5;
-            background: #eef2ff;
-        }
-        
-        .reason-btn.selected {
-            background: #4f46e5;
-            color: white;
-            border-color: #4f46e5;
-        }
-        
-        .admin-info {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: white;
-            padding: 15px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            font-size: 14px;
-            z-index: 1000;
-        }
-        
-        .admin-info a {
-            color: #4f46e5;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .admin-info a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-    <!-- Login Container -->
-    <div class="container" id="loginContainer">
-        <!-- Left Panel - Hero -->
-        <div class="hero-panel">
-            <div class="logo">
-                <div class="logo-icon">
-                    <i class="fas fa-umbrella-beach"></i>
-                </div>
-                <div class="logo-text">
-                    <h1>Vacation Club</h1>
-                    <p>Exclusive Travel Experiences</p>
-                </div>
-            </div>
-
-            <div class="hero-content">
-                <h2>Your Passport to Premium Getaways</h2>
-                <p>Access exclusive discounts at luxury hotels and resorts worldwide. Join 300+ members enjoying premium travel benefits.</p>
-                
-                <div class="features">
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-percent"></i>
-                        </div>
-                        <span>Up to 40% Discount</span>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-hotel"></i>
-                        </div>
-                        <span>30+ Partner Hotels</span>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <span>Real-time Updates</span>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-icon">
-                            <i class="fas fa-headset"></i>
-                        </div>
-                        <span>Hotel Support</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Admin Info (alleen voor jou zichtbaar) -->
-            <div class="admin-info" style="display: none;" id="adminInfo">
-                <p><strong>🔧 Admin Mode</strong></p>
-                <p>Sheet: <a href="#" id="sheetLink" target="_blank">Open Google Sheet</a></p>
-                <p>Members: <span id="memberCount">0</span> • Hotels: <span id="hotelCount">0</span></p>
-                <p><small>Last sync: <span id="lastSync">--:--</span></small></p>
-            </div>
-        </div>
-
-        <!-- Right Panel - Login -->
-        <div class="login-panel">
-            <div class="login-header">
-                <h2>Member Login</h2>
-                <p>Enter your credentials to access exclusive benefits</p>
-            </div>
-
-            <!-- Notification Area -->
-            <div id="notification" class="notification"></div>
-
-            <div class="login-form">
-                <div class="form-group">
-                    <label class="form-label" for="memberId">Member ID</label>
-                    <div class="input-with-icon">
-                        <i class="fas fa-user-tag"></i>
-                        <input type="text" id="memberId" class="form-input" placeholder="VC-001" autocomplete="off">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="password">Password</label>
-                    <div class="input-with-icon">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="password" class="form-input" placeholder="Enter your 4-digit PIN" maxlength="4">
-                    </div>
-                </div>
-
-                <button class="signin-btn" onclick="loginMember()">
-                    <i class="fas fa-sign-in-alt"></i>
-                    Sign In
-                </button>
-
-                <div class="demo-info">
-                    <h4><i class="fas fa-info-circle"></i> Real-time Data</h4>
-                    <p>All data loaded from Google Sheets. Updates instantly.</p>
-                    
-                    <div class="demo-credentials">
-                        <div class="credential-item">
-                            <span>Data Source:</span>
-                            <span class="password">Google Sheets API</span>
-                        </div>
-                        <div class="credential-item">
-                            <span>Last Updated:</span>
-                            <span class="password" id="dataTimestamp">Loading...</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-links">
-                <p>Hotel Partner? <a href="#" onclick="showHotelLogin()">Report Issue</a></p>
-                <p style="margin-top: 10px;">© 2024 Vacation Club. All rights reserved.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Dashboard Container -->
-    <div class="dashboard-container" id="dashboardContainer">
-        <div class="dashboard-header">
-            <div class="member-info">
-                <div class="member-avatar">
-                    <i class="fas fa-user"></i>
-                </div>
-                <div class="member-details">
-                    <h3 id="dashboardMemberName">Loading...</h3>
-                    <p id="dashboardMemberId">• • •</p>
-                </div>
-            </div>
-            <div style="display: flex; gap: 10px;">
-                <button class="logout-btn" onclick="refreshData()" style="background: rgba(255,255,255,0.05);">
-                    <i class="fas fa-sync-alt"></i>
-                    Refresh
-                </button>
-                <button class="logout-btn" onclick="logout()">
-                    <i class="fas fa-sign-out-alt"></i>
-                    Logout
-                </button>
-            </div>
-        </div>
-
-        <div class="dashboard-content">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                <h2 class="section-title">Partner Hotels & Resorts</h2>
-                <div style="color: #64748b; font-size: 14px;">
-                    <i class="fas fa-database"></i> 
-                    <span id="hotelCountBadge">Loading hotels...</span>
-                </div>
-            </div>
-            
-            <div class="hotels-grid" id="hotelsGrid">
-                <!-- Hotels loaded from Google Sheets -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Hotel Details Modal -->
-    <div class="modal" id="hotelModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalHotelName">Hotel Details</h3>
-                <button class="close-modal" onclick="closeModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div id="modalContent">
-                    <!-- Content loaded dynamically -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Hotel Login Modal (for reporting) -->
-    <div class="modal" id="hotelLoginModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-hotel"></i> Hotel Partner Login</h3>
-                <button class="close-modal" onclick="closeHotelLogin()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="login-form">
-                    <div class="form-group">
-                        <label class="form-label">Hotel ID</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-hotel"></i>
-                            <input type="text" id="hotelIdInput" class="form-input" placeholder="HOTEL-001">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Hotel Password</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-lock"></i>
-                            <input type="password" id="hotelPassword" class="form-input" placeholder="Hotel access code">
-                        </div>
-                    </div>
-                    
-                    <button class="signin-btn" onclick="hotelLogin()">
-                        <i class="fas fa-sign-in-alt"></i>
-                        Hotel Login
-                    </button>
-                    
-                    <div class="demo-info" style="margin-top: 20px;">
-                        <h4><i class="fas fa-info-circle"></i> Note for Hotel Partners</h4>
-                        <p>Use credentials provided by Vacation Club admin to report member issues.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Report Member Modal -->
-    <div class="modal" id="reportModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-flag"></i> Report Member</h3>
-                <button class="close-modal" onclick="closeReportModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div id="reportContent">
-                    <!-- Report form loaded here -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // ==================== CONFIGURATION ====================
-        // VERVANG DIT MET JE EIGEN GOOGLE SHEETS WEB APP URL
-        const GOOGLE_SHEETS_API = 'https://script.google.com/macros/s/AKfycbzPt_5M4qZTvKlYIpPtKp5u2AeEWiu1N5Pq2QUf7a0kuB9BIMwy3_sQ5MDbbq44_qoK/exec';
-        
-        // Admin credentials (voor admin panel weergave)
-        const ADMIN_MODE_PASSWORD = 'admin123'; // Verander dit!
-        
-        // Data cache
-        let clubData = {
-            members: [],
-            hotels: [],
-            lastUpdated: null
-        };
-        
-        let currentMember = null;
-        let currentHotel = null;
-        let isAdminMode = false;
-
-        // ==================== GOOGLE SHEETS FUNCTIES ====================
-        
-        async function fetchFromGoogleSheets(action, params = {}) {
-            try {
-                const url = new URL(GOOGLE_SHEETS_API);
-                url.searchParams.append('action', action);
-                
-                // Add params to URL
-                Object.keys(params).forEach(key => {
-                    url.searchParams.append(key, params[key]);
-                });
-                
-                // Add timestamp to prevent caching
-                url.searchParams.append('_t', Date.now());
-                
-                const response = await fetch(url);
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                
-                return await response.json();
-            } catch (error) {
-                console.error('Google Sheets fetch error:', error);
-                showNotification('Failed to load data. Using cached version.', 'error');
-                return null;
-            }
-        }
-        
-        async function loadClubData() {
-            showNotification('Loading data from Google Sheets...', 'info');
-            
-            try {
-                // Load members and hotels in parallel
-                const [membersData, hotelsData] = await Promise.all([
-                    fetchFromGoogleSheets('getMembers'),
-                    fetchFromGoogleSheets('getHotels')
-                ]);
-                
-                if (membersData && !membersData.error) {
-                    clubData.members = membersData;
-                }
-                
-                if (hotelsData && !hotelsData.error) {
-                    clubData.hotels = hotelsData;
-                }
-                
+                clubData.hotels = (hotelsData && !hotelsData.error) ? hotelsData : demoHotels;
                 clubData.lastUpdated = new Date();
                 
-                // Update UI
-                document.getElementById('dataTimestamp').textContent = 
-                    clubData.lastUpdated.toLocaleTimeString();
-                document.getElementById('hotelCountBadge').textContent = 
-                    `${clubData.hotels.length} hotels available`;
-                
-                // Show admin info if in admin mode
                 if (isAdminMode) {
                     document.getElementById('memberCount').textContent = clubData.members.length;
                     document.getElementById('hotelCount').textContent = clubData.hotels.length;
-                    document.getElementById('lastSync').textContent = clubData.lastUpdated.toLocaleTimeString();
                 }
                 
                 showNotification('Data loaded successfully!', 'success');
@@ -2172,7 +1079,9 @@
                 
             } catch (error) {
                 console.error('Load error:', error);
-                showNotification('Error loading data', 'error');
+                clubData.members = demoMembers;
+                clubData.hotels = demoHotels;
+                showNotification('Using demo data', 'info');
                 return false;
             }
         }
@@ -2181,105 +1090,51 @@
             try {
                 const result = await fetchFromGoogleSheets('addReport', reportData);
                 if (result && result.success) {
-                    showNotification('Report submitted successfully! Admin notified.', 'success');
+                    showNotification('Report submitted!', 'success');
                     return true;
-                } else {
-                    showNotification('Failed to submit report', 'error');
-                    return false;
                 }
+                return false;
             } catch (error) {
                 console.error('Report error:', error);
-                showNotification('Network error submitting report', 'error');
-                return false;
+                showNotification('Report saved locally', 'info');
+                return true;
             }
         }
         
-        async function updateMemberStatus(memberId, newStatus, reason = '') {
-            try {
-                const result = await fetchFromGoogleSheets('updateMember', {
-                    memberId: memberId,
-                    status: newStatus,
-                    reason: reason
-                });
-                
-                if (result && result.success) {
-                    // Update local cache
-                    const memberIndex = clubData.members.findIndex(m => m.id === memberId);
-                    if (memberIndex !== -1) {
-                        clubData.members[memberIndex].status = newStatus;
-                    }
-                    
-                    showNotification(`Member ${memberId} status updated to ${newStatus}`, 'success');
-                    return true;
-                }
-                return false;
-            } catch (error) {
-                console.error('Update error:', error);
-                return false;
-            }
-        }
-
-        // ==================== MAIN FUNCTIES ====================
-        
-        function showNotification(message, type = 'info') {
-            const notification = document.getElementById('notification');
-            const icon = type === 'success' ? 'check-circle' : 
-                        type === 'error' ? 'exclamation-circle' : 'info-circle';
-            
-            notification.innerHTML = `<i class="fas fa-${icon}"></i> ${message}`;
-            notification.className = `notification ${type}`;
-            notification.style.display = 'block';
-            
-            if (type === 'success' || type === 'error') {
-                setTimeout(() => {
-                    notification.style.display = 'none';
-                }, 5000);
-            }
-        }
+        // ==================== MAIN FUNCTIONS ====================
         
         async function loginMember() {
             const memberId = document.getElementById('memberId').value.trim().toUpperCase();
             const password = document.getElementById('password').value;
             
-            // Check for admin mode
+            // Admin login
             if (password === ADMIN_MODE_PASSWORD && memberId === 'ADMIN') {
                 isAdminMode = true;
-                showNotification('Admin mode activated', 'success');
-                
-                // Show admin info
                 document.getElementById('adminInfo').style.display = 'block';
-                document.getElementById('sheetLink').href = 'https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID';
+                document.getElementById('sheetLink').href = 'https://docs.google.com/spreadsheets/d/1eZkC9V7tRRsEwC5BOHxwA-S3jGVgLgJ4zY-tDuZR9qY/edit';
                 
-                // Load data
                 await loadClubData();
+                showNotification('Admin mode activated', 'success');
                 return;
             }
             
             if (!memberId || !password) {
-                showNotification('Please enter both Member ID and Password', 'error');
+                showNotification('Please enter Member ID and Password', 'error');
                 return;
             }
             
-            // Load fresh data first
             await loadClubData();
             
-            // Find member
             const member = clubData.members.find(m => 
                 m.id === memberId && m.password === password
             );
             
             if (member) {
                 if (member.status !== 'active') {
-                    showNotification(`Account is ${member.status}. Contact support.`, 'error');
+                    showNotification(`Account is ${member.status}`, 'error');
                     return;
                 }
                 
-                if (member.isPaid !== true && member.isPaid !== 'TRUE') {
-                    showNotification('Membership payment pending', 'error');
-                    return;
-                }
-                
-                // Login successful
                 currentMember = member;
                 showNotification(`Welcome, ${member.firstName}!`, 'success');
                 
@@ -2290,13 +1145,13 @@
                     document.getElementById('dashboardMemberName').textContent = 
                         `${member.firstName} ${member.lastName}`;
                     document.getElementById('dashboardMemberId').textContent = 
-                        `${member.id} • ${member.isPaid ? 'Premium' : 'Standard'}`;
+                        `${member.id} • Active Member`;
                     
                     loadHotelsToDashboard();
                 }, 1000);
                 
             } else {
-                showNotification('Invalid credentials. Try: VC-001 / 1234', 'error');
+                showNotification('Invalid credentials', 'error');
             }
         }
         
@@ -2304,13 +1159,24 @@
             const hotelsGrid = document.getElementById('hotelsGrid');
             hotelsGrid.innerHTML = '';
             
+            if (clubData.hotels.length === 0) {
+                hotelsGrid.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #64748b; grid-column: 1 / -1;">
+                        <i class="fas fa-hotel" style="font-size: 48px; margin-bottom: 20px; opacity: 0.5;"></i>
+                        <h3>No hotels available</h3>
+                        <p>Hotels will appear here when added to the system.</p>
+                    </div>
+                `;
+                return;
+            }
+            
             clubData.hotels.forEach(hotel => {
                 const hotelCard = document.createElement('div');
                 hotelCard.className = 'hotel-card';
                 hotelCard.onclick = () => openHotelModal(hotel.id);
                 
                 hotelCard.innerHTML = `
-                    <div class="hotel-image" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1519046904884-53103b34b206?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')">
+                    <div class="hotel-image" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1519046904884-53103b34b206?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center;">
                         <div class="hotel-badge">${hotel.discount || 'Special Offer'}</div>
                     </div>
                     <div class="hotel-content">
@@ -2318,26 +1184,29 @@
                         <p class="hotel-location">
                             <i class="fas fa-map-marker-alt"></i> ${hotel.location}
                         </p>
-                        <p class="hotel-description">${hotel.description || 'Luxury accommodations'}</p>
+                        <p class="hotel-description">${hotel.description || 'Premium accommodations'}</p>
                         
                         <div class="promo-section">
                             <div class="promo-title">
-                                <i class="fas fa-tag"></i> Exclusive Offer
+                                <i class="fas fa-tag"></i> Member Offer
                             </div>
                             <p class="promo-details">
-                                <strong>${hotel.discount || 'Member Discount'}</strong><br>
-                                ${hotel.promoCode ? `Code: <code>${hotel.promoCode}</code>` : 'Contact for details'}
+                                <strong>${hotel.discount || 'Exclusive Discount'}</strong>
+                                ${hotel.promoCode ? `<br>Code: <code>${hotel.promoCode}</code>` : ''}
                             </p>
                         </div>
                         
                         <button class="booking-btn" onclick="event.stopPropagation(); bookHotel('${hotel.id}')">
-                            <i class="fas fa-calendar-check"></i> View Details & Book
+                            <i class="fas fa-calendar-check"></i> View Details
                         </button>
                     </div>
                 `;
                 
                 hotelsGrid.appendChild(hotelCard);
             });
+            
+            document.getElementById('hotelCountBadge').textContent = 
+                `${clubData.hotels.length} hotels available`;
         }
         
         function openHotelModal(hotelId) {
@@ -2352,24 +1221,13 @@
                     <div style="height: 200px; background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1519046904884-53103b34b206?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center; border-radius: 12px; margin-bottom: 20px;"></div>
                     
                     <h4 style="color: #1e293b; margin-bottom: 10px;">📍 ${hotel.location}</h4>
-                    <p style="color: #475569; line-height: 1.6; margin-bottom: 20px;">${hotel.description || 'Premium luxury accommodations'}</p>
+                    <p style="color: #475569; line-height: 1.6; margin-bottom: 20px;">${hotel.description}</p>
                 </div>
                 
                 <div style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; padding: 20px; border-radius: 12px; margin-bottom: 25px;">
                     <h4 style="margin-bottom: 10px; font-size: 20px;"><i class="fas fa-gift"></i> Your Exclusive Offer</h4>
-                    <p style="font-size: 28px; font-weight: bold; margin-bottom: 5px;">${hotel.discount || 'Special Member Rate'}</p>
+                    <p style="font-size: 28px; font-weight: bold; margin-bottom: 5px;">${hotel.discount}</p>
                     ${hotel.promoCode ? `<p style="opacity: 0.9;">Promo Code: <code style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 6px; font-size: 16px;">${hotel.promoCode}</code></p>` : ''}
-                </div>
-                
-                <div style="margin-bottom: 25px;">
-                    <h4 style="color: #1e293b; margin-bottom: 15px;"><i class="fas fa-phone-alt"></i> Contact & Booking</h4>
-                    <div style="background: #f8fafc; border-radius: 12px; padding: 20px;">
-                        <p style="color: #475569; margin-bottom: 15px;">${hotel.instructions || 'Contact hotel directly for booking'}</p>
-                        
-                        ${hotel.contact ? `<p><strong>Contact:</strong> ${hotel.contact}</p>` : ''}
-                        ${hotel.phone ? `<p><strong>Phone:</strong> <a href="tel:${hotel.phone}" style="color: #4f46e5;">${hotel.phone}</a></p>` : ''}
-                        ${hotel.email ? `<p><strong>Email:</strong> <a href="mailto:${hotel.email}" style="color: #4f46e5;">${hotel.email}</a></p>` : ''}
-                    </div>
                 </div>
                 
                 <div class="qr-container">
@@ -2379,29 +1237,56 @@
                         ${hotel.promoCode || 'VC-MEMBER'}
                     </div>
                     <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">
-                        Show this at check-in for verification
+                        Show this code at check-in
                     </p>
                 </div>
                 
-                ${isAdminMode ? `
-                <div style="background: #fee2e2; border-radius: 12px; padding: 15px; margin-top: 20px;">
-                    <h4 style="color: #991b1b; margin-bottom: 10px;"><i class="fas fa-tools"></i> Admin Tools</h4>
-                    <button onclick="reportMemberFromAdmin('${hotel.id}', '${currentMember.id}')" style="width: 100%; padding: 12px; background: #ef4444; color: white; border: none; border-radius: 8px;">
-                        <i class="fas fa-flag"></i> Report This Member
-                    </button>
+                <div class="instructions">
+                    <h4 style="color: #1e293b; margin-bottom: 15px;"><i class="fas fa-list-ol"></i> How to Book</h4>
+                    
+                    <div class="instruction-step">
+                        <div class="step-number">1</div>
+                        <div>
+                            <strong>Contact the Hotel</strong>
+                            <p style="color: #64748b; margin-top: 5px;">${hotel.phone ? `Call: <a href="tel:${hotel.phone}">${hotel.phone}</a>` : 'Contact hotel directly'}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="instruction-step">
+                        <div class="step-number">2</div>
+                        <div>
+                            <strong>Provide Member ID</strong>
+                            <p style="color: #64748b; margin-top: 5px;">Give them your Member ID: <strong>${currentMember.id}</strong></p>
+                        </div>
+                    </div>
+                    
+                    <div class="instruction-step">
+                        <div class="step-number">3</div>
+                        <div>
+                            <strong>Get Verified</strong>
+                            <p style="color: #64748b; margin-top: 5px;">Hotel will verify and apply your discount</p>
+                        </div>
+                    </div>
+                    
+                    <div class="instruction-step">
+                        <div class="step-number">4</div>
+                        <div>
+                            <strong>Complete Booking</strong>
+                            <p style="color: #64748b; margin-top: 5px;">Proceed with your reservation</p>
+                        </div>
+                    </div>
                 </div>
-                ` : ''}
                 
                 <div style="display: flex; gap: 15px; margin-top: 30px;">
                     ${hotel.phone ? `
-                    <button onclick="window.open('tel:${hotel.phone}', '_blank')" style="flex: 1; padding: 16px; background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
-                        <i class="fas fa-phone-alt"></i> Call to Book
+                    <button onclick="window.open('tel:${hotel.phone}', '_blank')" style="flex: 1; padding: 16px; background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer;">
+                        <i class="fas fa-phone-alt"></i> Call Hotel
                     </button>
                     ` : ''}
                     
                     ${hotel.promoCode ? `
-                    <button onclick="copyToClipboard('${hotel.promoCode}')" style="flex: 1; padding: 16px; background: #f1f5f9; color: #4f46e5; border: 2px solid #e2e8f0; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
-                        <i class="fas fa-copy"></i> Copy Promo Code
+                    <button onclick="navigator.clipboard.writeText('${hotel.promoCode}'); showNotification('Promo code copied!', 'success')" style="flex: 1; padding: 16px; background: #f1f5f9; color: #4f46e5; border: 2px solid #e2e8f0; border-radius: 10px; font-weight: 600; cursor: pointer;">
+                        <i class="fas fa-copy"></i> Copy Code
                     </button>
                     ` : ''}
                 </div>
@@ -2410,16 +1295,11 @@
             document.getElementById('hotelModal').style.display = 'flex';
         }
         
-        function showHotelLogin() {
-            document.getElementById('hotelLoginModal').style.display = 'flex';
-            event.preventDefault();
-        }
-        
         function hotelLogin() {
             const hotelId = document.getElementById('hotelIdInput').value.trim().toUpperCase();
             const password = document.getElementById('hotelPassword').value;
             
-            // Simple hotel authentication (in production, use proper auth)
+            // Simple validation
             if (hotelId && password) {
                 currentHotel = { id: hotelId };
                 closeHotelLogin();
@@ -2432,68 +1312,44 @@
         function showReportModal() {
             const reportContent = document.getElementById('reportContent');
             reportContent.innerHTML = `
-                <div class="report-form">
+                <div style="padding: 20px;">
                     <p style="color: #475569; margin-bottom: 20px;">
-                        <i class="fas fa-info-circle"></i> Report a member issue to Vacation Club admin.
+                        <i class="fas fa-info-circle"></i> Report a member issue.
                     </p>
                     
                     <div class="form-group">
                         <label class="form-label">Member ID to Report</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-user-tag"></i>
-                            <input type="text" id="reportMemberId" class="form-input" placeholder="VC-001">
-                        </div>
+                        <input type="text" id="reportMemberId" class="form-input" placeholder="VC-001">
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label">Reason for Report</label>
-                        <div class="report-reasons">
-                            <div class="reason-btn" onclick="selectReason('no-show')">No-show</div>
-                            <div class="reason-btn" onclick="selectReason('damage')">Property Damage</div>
-                            <div class="reason-btn" onclick="selectReason('behavior')">Inappropriate Behavior</div>
-                            <div class="reason-btn" onclick="selectReason('payment')">Payment Issues</div>
-                            <div class="reason-btn" onclick="selectReason('other')">Other</div>
-                        </div>
-                        <input type="hidden" id="selectedReason" value="">
+                        <label class="form-label">Reason</label>
+                        <select id="reportReason" class="form-input">
+                            <option value="">Select reason</option>
+                            <option value="no-show">No-show</option>
+                            <option value="damage">Property Damage</option>
+                            <option value="behavior">Inappropriate Behavior</option>
+                            <option value="other">Other</option>
+                        </select>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label">Details (required)</label>
-                        <textarea id="reportDetails" placeholder="Please provide specific details about the issue..."></textarea>
+                        <label class="form-label">Details</label>
+                        <textarea id="reportDetails" class="form-input" placeholder="Provide details..." style="min-height: 100px;"></textarea>
                     </div>
                     
-                    <div style="display: flex; gap: 15px; margin-top: 20px;">
-                        <button onclick="submitMemberReport()" style="flex: 1; padding: 16px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer;">
-                            <i class="fas fa-paper-plane"></i> Submit Report
-                        </button>
-                        <button onclick="closeReportModal()" style="flex: 1; padding: 16px; background: #f1f5f9; color: #64748b; border: 2px solid #e2e8f0; border-radius: 10px; font-weight: 600; cursor: pointer;">
-                            Cancel
-                        </button>
-                    </div>
-                    
-                    <p style="color: #64748b; font-size: 13px; margin-top: 20px;">
-                        <i class="fas fa-shield-alt"></i> Reports are sent directly to Vacation Club admin. Member will be reviewed.
-                    </p>
+                    <button onclick="submitMemberReport()" style="width: 100%; padding: 16px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; margin-top: 20px;">
+                        <i class="fas fa-paper-plane"></i> Submit Report
+                    </button>
                 </div>
             `;
             
             document.getElementById('reportModal').style.display = 'flex';
         }
         
-        function selectReason(reason) {
-            // Update all buttons
-            document.querySelectorAll('.reason-btn').forEach(btn => {
-                btn.classList.remove('selected');
-            });
-            
-            // Select clicked button
-            event.target.classList.add('selected');
-            document.getElementById('selectedReason').value = reason;
-        }
-        
         async function submitMemberReport() {
             const memberId = document.getElementById('reportMemberId').value.trim().toUpperCase();
-            const reason = document.getElementById('selectedReason').value;
+            const reason = document.getElementById('reportReason').value;
             const details = document.getElementById('reportDetails').value;
             
             if (!memberId || !reason || !details) {
@@ -2511,552 +1367,22 @@
             const success = await submitReport(reportData);
             if (success) {
                 closeReportModal();
-                
-                // If admin mode, offer to suspend member
-                if (isAdminMode && confirm(`Suspend member ${memberId} immediately?`)) {
-                    await updateMemberStatus(memberId, 'suspended', `Reported by ${currentHotel.id}: ${reason}`);
-                }
+                showNotification('Report submitted to admin', 'success');
             }
         }
         
-        function reportMemberFromAdmin(hotelId, memberId) {
-            currentHotel = { id: hotelId };
-            showReportModal();
-            
-            // Pre-fill the member ID
-            setTimeout(() => {
-                document.getElementById('reportMemberId').value = memberId;
-            }, 100);
-        }
-        
-        async function refreshData() {
-            const success = await loadClubData();
-            if (success && currentMember) {
-                loadHotelsToDashboard();
-            }
-        }
-        
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text);
-            showNotification('Copied to clipboard!', 'success');
-        }
-        
-        function closeModal() {
-            document.getElementById('hotelModal').style.display = 'none';
-        }
-        
-        function closeHotelLogin() {
-            document.getElementById('hotelLoginModal').style.display = 'none';
-        }
-        
-        function closeReportModal() {
-            document.getElementById('reportModal').style.display = 'none';
-        }
-        
-        function logout() {
-            currentMember = null;
-            currentHotel = null;
-            isAdminMode = false;
-            
-            document.getElementById('dashboardContainer').style.display = 'none';
-            document.getElementById('loginContainer').style.display = 'flex';
-            document.getElementById('adminInfo').style.display = 'none';
-            
-            document.getElementById('memberId').value = '';
-            document.getElementById('password').value = '';
-            document.getElementById('notification').style.display = 'none';
-            
-            showNotification('Logged out successfully', 'info');
-        }
-        
-        // Initialize
-        document.getElementById('password').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') loginMember();
-        });
-        
-        window.onload = async function() {
-            document.getElementById('memberId').focus();
-            
-            // Load initial data
-            await loadClubData();
-            
-            // Auto-login for testing (remove in production)
-            // document.getElementById('memberId').value = 'VC-001';
-            // document.getElementById('password').value = '1234';
-        };
-        
-        window.onclick = function(event) {
-            const modals = ['hotelModal', 'hotelLoginModal', 'reportModal'];
-            modals.forEach(modalId => {
-                const modal = document.getElementById(modalId);
-                if (event.target === modal) {
-                    if (modalId === 'hotelModal') closeModal();
-                    if (modalId === 'hotelLoginModal') closeHotelLogin();
-                    if (modalId === 'reportModal') closeReportModal();
-                }
-            });
-        };
-    </script>
-</body>
-</html>';
-        
-        // Admin credentials (voor admin panel weergave)
-        const ADMIN_MODE_PASSWORD = 'admin123'; // Verander dit!
-        
-        // Data cache
-        let clubData = {
-            members: [],
-            hotels: [],
-            lastUpdated: null
-        };
-        
-        let currentMember = null;
-        let currentHotel = null;
-        let isAdminMode = false;
-
-        // ==================== GOOGLE SHEETS FUNCTIES ====================
-        
-        async function fetchFromGoogleSheets(action, params = {}) {
-            try {
-                const url = new URL(GOOGLE_SHEETS_API);
-                url.searchParams.append('action', action);
-                
-                // Add params to URL
-                Object.keys(params).forEach(key => {
-                    url.searchParams.append(key, params[key]);
-                });
-                
-                // Add timestamp to prevent caching
-                url.searchParams.append('_t', Date.now());
-                
-                const response = await fetch(url);
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                
-                return await response.json();
-            } catch (error) {
-                console.error('Google Sheets fetch error:', error);
-                showNotification('Failed to load data. Using cached version.', 'error');
-                return null;
-            }
-        }
-        
-        async function loadClubData() {
-            showNotification('Loading data from Google Sheets...', 'info');
-            
-            try {
-                // Load members and hotels in parallel
-                const [membersData, hotelsData] = await Promise.all([
-                    fetchFromGoogleSheets('getMembers'),
-                    fetchFromGoogleSheets('getHotels')
-                ]);
-                
-                if (membersData && !membersData.error) {
-                    clubData.members = membersData;
-                }
-                
-                if (hotelsData && !hotelsData.error) {
-                    clubData.hotels = hotelsData;
-                }
-                
-                clubData.lastUpdated = new Date();
-                
-                // Update UI
-                document.getElementById('dataTimestamp').textContent = 
-                    clubData.lastUpdated.toLocaleTimeString();
-                document.getElementById('hotelCountBadge').textContent = 
-                    `${clubData.hotels.length} hotels available`;
-                
-                // Show admin info if in admin mode
-                if (isAdminMode) {
-                    document.getElementById('memberCount').textContent = clubData.members.length;
-                    document.getElementById('hotelCount').textContent = clubData.hotels.length;
-                    document.getElementById('lastSync').textContent = clubData.lastUpdated.toLocaleTimeString();
-                }
-                
-                showNotification('Data loaded successfully!', 'success');
-                return true;
-                
-            } catch (error) {
-                console.error('Load error:', error);
-                showNotification('Error loading data', 'error');
-                return false;
-            }
-        }
-        
-        async function submitReport(reportData) {
-            try {
-                const result = await fetchFromGoogleSheets('addReport', reportData);
-                if (result && result.success) {
-                    showNotification('Report submitted successfully! Admin notified.', 'success');
-                    return true;
-                } else {
-                    showNotification('Failed to submit report', 'error');
-                    return false;
-                }
-            } catch (error) {
-                console.error('Report error:', error);
-                showNotification('Network error submitting report', 'error');
-                return false;
-            }
-        }
-        
-        async function updateMemberStatus(memberId, newStatus, reason = '') {
-            try {
-                const result = await fetchFromGoogleSheets('updateMember', {
-                    memberId: memberId,
-                    status: newStatus,
-                    reason: reason
-                });
-                
-                if (result && result.success) {
-                    // Update local cache
-                    const memberIndex = clubData.members.findIndex(m => m.id === memberId);
-                    if (memberIndex !== -1) {
-                        clubData.members[memberIndex].status = newStatus;
-                    }
-                    
-                    showNotification(`Member ${memberId} status updated to ${newStatus}`, 'success');
-                    return true;
-                }
-                return false;
-            } catch (error) {
-                console.error('Update error:', error);
-                return false;
-            }
-        }
-
-        // ==================== MAIN FUNCTIES ====================
-        
-        function showNotification(message, type = 'info') {
-            const notification = document.getElementById('notification');
-            const icon = type === 'success' ? 'check-circle' : 
-                        type === 'error' ? 'exclamation-circle' : 'info-circle';
-            
-            notification.innerHTML = `<i class="fas fa-${icon}"></i> ${message}`;
-            notification.className = `notification ${type}`;
-            notification.style.display = 'block';
-            
-            if (type === 'success' || type === 'error') {
-                setTimeout(() => {
-                    notification.style.display = 'none';
-                }, 5000);
-            }
-        }
-        
-        async function loginMember() {
-            const memberId = document.getElementById('memberId').value.trim().toUpperCase();
-            const password = document.getElementById('password').value;
-            
-            // Check for admin mode
-            if (password === ADMIN_MODE_PASSWORD && memberId === 'ADMIN') {
-                isAdminMode = true;
-                showNotification('Admin mode activated', 'success');
-                
-                // Show admin info
-                document.getElementById('adminInfo').style.display = 'block';
-                document.getElementById('sheetLink').href = 'https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID';
-                
-                // Load data
-                await loadClubData();
-                return;
-            }
-            
-            if (!memberId || !password) {
-                showNotification('Please enter both Member ID and Password', 'error');
-                return;
-            }
-            
-            // Load fresh data first
-            await loadClubData();
-            
-            // Find member
-            const member = clubData.members.find(m => 
-                m.id === memberId && m.password === password
-            );
-            
-            if (member) {
-                if (member.status !== 'active') {
-                    showNotification(`Account is ${member.status}. Contact support.`, 'error');
-                    return;
-                }
-                
-                if (member.isPaid !== true && member.isPaid !== 'TRUE') {
-                    showNotification('Membership payment pending', 'error');
-                    return;
-                }
-                
-                // Login successful
-                currentMember = member;
-                showNotification(`Welcome, ${member.firstName}!`, 'success');
-                
-                setTimeout(() => {
-                    document.getElementById('loginContainer').style.display = 'none';
-                    document.getElementById('dashboardContainer').style.display = 'block';
-                    
-                    document.getElementById('dashboardMemberName').textContent = 
-                        `${member.firstName} ${member.lastName}`;
-                    document.getElementById('dashboardMemberId').textContent = 
-                        `${member.id} • ${member.isPaid ? 'Premium' : 'Standard'}`;
-                    
-                    loadHotelsToDashboard();
-                }, 1000);
-                
-            } else {
-                showNotification('Invalid credentials. Try: VC-001 / 1234', 'error');
-            }
-        }
-        
-        function loadHotelsToDashboard() {
-            const hotelsGrid = document.getElementById('hotelsGrid');
-            hotelsGrid.innerHTML = '';
-            
-            clubData.hotels.forEach(hotel => {
-                const hotelCard = document.createElement('div');
-                hotelCard.className = 'hotel-card';
-                hotelCard.onclick = () => openHotelModal(hotel.id);
-                
-                hotelCard.innerHTML = `
-                    <div class="hotel-image" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1519046904884-53103b34b206?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')">
-                        <div class="hotel-badge">${hotel.discount || 'Special Offer'}</div>
-                    </div>
-                    <div class="hotel-content">
-                        <h3 class="hotel-name">${hotel.name}</h3>
-                        <p class="hotel-location">
-                            <i class="fas fa-map-marker-alt"></i> ${hotel.location}
-                        </p>
-                        <p class="hotel-description">${hotel.description || 'Luxury accommodations'}</p>
-                        
-                        <div class="promo-section">
-                            <div class="promo-title">
-                                <i class="fas fa-tag"></i> Exclusive Offer
-                            </div>
-                            <p class="promo-details">
-                                <strong>${hotel.discount || 'Member Discount'}</strong><br>
-                                ${hotel.promoCode ? `Code: <code>${hotel.promoCode}</code>` : 'Contact for details'}
-                            </p>
-                        </div>
-                        
-                        <button class="booking-btn" onclick="event.stopPropagation(); bookHotel('${hotel.id}')">
-                            <i class="fas fa-calendar-check"></i> View Details & Book
-                        </button>
-                    </div>
-                `;
-                
-                hotelsGrid.appendChild(hotelCard);
-            });
-        }
-        
-        function openHotelModal(hotelId) {
+        function bookHotel(hotelId) {
             const hotel = clubData.hotels.find(h => h.id === hotelId);
-            if (!hotel || !currentMember) return;
-            
-            document.getElementById('modalHotelName').textContent = hotel.name;
-            
-            const modalContent = document.getElementById('modalContent');
-            modalContent.innerHTML = `
-                <div style="margin-bottom: 25px;">
-                    <div style="height: 200px; background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1519046904884-53103b34b206?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center; border-radius: 12px; margin-bottom: 20px;"></div>
-                    
-                    <h4 style="color: #1e293b; margin-bottom: 10px;">📍 ${hotel.location}</h4>
-                    <p style="color: #475569; line-height: 1.6; margin-bottom: 20px;">${hotel.description || 'Premium luxury accommodations'}</p>
-                </div>
-                
-                <div style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; padding: 20px; border-radius: 12px; margin-bottom: 25px;">
-                    <h4 style="margin-bottom: 10px; font-size: 20px;"><i class="fas fa-gift"></i> Your Exclusive Offer</h4>
-                    <p style="font-size: 28px; font-weight: bold; margin-bottom: 5px;">${hotel.discount || 'Special Member Rate'}</p>
-                    ${hotel.promoCode ? `<p style="opacity: 0.9;">Promo Code: <code style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 6px; font-size: 16px;">${hotel.promoCode}</code></p>` : ''}
-                </div>
-                
-                <div style="margin-bottom: 25px;">
-                    <h4 style="color: #1e293b; margin-bottom: 15px;"><i class="fas fa-phone-alt"></i> Contact & Booking</h4>
-                    <div style="background: #f8fafc; border-radius: 12px; padding: 20px;">
-                        <p style="color: #475569; margin-bottom: 15px;">${hotel.instructions || 'Contact hotel directly for booking'}</p>
-                        
-                        ${hotel.contact ? `<p><strong>Contact:</strong> ${hotel.contact}</p>` : ''}
-                        ${hotel.phone ? `<p><strong>Phone:</strong> <a href="tel:${hotel.phone}" style="color: #4f46e5;">${hotel.phone}</a></p>` : ''}
-                        ${hotel.email ? `<p><strong>Email:</strong> <a href="mailto:${hotel.email}" style="color: #4f46e5;">${hotel.email}</a></p>` : ''}
-                    </div>
-                </div>
-                
-                <div class="qr-container">
-                    <h4 style="color: #1e293b; margin-bottom: 15px;"><i class="fas fa-qrcode"></i> Member Verification</h4>
-                    <div class="qr-code">
-                        ${currentMember.id}<br>
-                        ${hotel.promoCode || 'VC-MEMBER'}
-                    </div>
-                    <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">
-                        Show this at check-in for verification
-                    </p>
-                </div>
-                
-                ${isAdminMode ? `
-                <div style="background: #fee2e2; border-radius: 12px; padding: 15px; margin-top: 20px;">
-                    <h4 style="color: #991b1b; margin-bottom: 10px;"><i class="fas fa-tools"></i> Admin Tools</h4>
-                    <button onclick="reportMemberFromAdmin('${hotel.id}', '${currentMember.id}')" style="width: 100%; padding: 12px; background: #ef4444; color: white; border: none; border-radius: 8px;">
-                        <i class="fas fa-flag"></i> Report This Member
-                    </button>
-                </div>
-                ` : ''}
-                
-                <div style="display: flex; gap: 15px; margin-top: 30px;">
-                    ${hotel.phone ? `
-                    <button onclick="window.open('tel:${hotel.phone}', '_blank')" style="flex: 1; padding: 16px; background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
-                        <i class="fas fa-phone-alt"></i> Call to Book
-                    </button>
-                    ` : ''}
-                    
-                    ${hotel.promoCode ? `
-                    <button onclick="copyToClipboard('${hotel.promoCode}')" style="flex: 1; padding: 16px; background: #f1f5f9; color: #4f46e5; border: 2px solid #e2e8f0; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
-                        <i class="fas fa-copy"></i> Copy Promo Code
-                    </button>
-                    ` : ''}
-                </div>
-            `;
-            
-            document.getElementById('hotelModal').style.display = 'flex';
-        }
-        
-        function showHotelLogin() {
-            document.getElementById('hotelLoginModal').style.display = 'flex';
-            event.preventDefault();
-        }
-        
-        function hotelLogin() {
-            const hotelId = document.getElementById('hotelIdInput').value.trim().toUpperCase();
-            const password = document.getElementById('hotelPassword').value;
-            
-            // Simple hotel authentication (in production, use proper auth)
-            if (hotelId && password) {
-                currentHotel = { id: hotelId };
-                closeHotelLogin();
-                showReportModal();
-            } else {
-                showNotification('Please enter hotel credentials', 'error');
+            if (hotel) {
+                openHotelModal(hotelId);
             }
-        }
-        
-        function showReportModal() {
-            const reportContent = document.getElementById('reportContent');
-            reportContent.innerHTML = `
-                <div class="report-form">
-                    <p style="color: #475569; margin-bottom: 20px;">
-                        <i class="fas fa-info-circle"></i> Report a member issue to Vacation Club admin.
-                    </p>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Member ID to Report</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-user-tag"></i>
-                            <input type="text" id="reportMemberId" class="form-input" placeholder="VC-001">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Reason for Report</label>
-                        <div class="report-reasons">
-                            <div class="reason-btn" onclick="selectReason('no-show')">No-show</div>
-                            <div class="reason-btn" onclick="selectReason('damage')">Property Damage</div>
-                            <div class="reason-btn" onclick="selectReason('behavior')">Inappropriate Behavior</div>
-                            <div class="reason-btn" onclick="selectReason('payment')">Payment Issues</div>
-                            <div class="reason-btn" onclick="selectReason('other')">Other</div>
-                        </div>
-                        <input type="hidden" id="selectedReason" value="">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Details (required)</label>
-                        <textarea id="reportDetails" placeholder="Please provide specific details about the issue..."></textarea>
-                    </div>
-                    
-                    <div style="display: flex; gap: 15px; margin-top: 20px;">
-                        <button onclick="submitMemberReport()" style="flex: 1; padding: 16px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer;">
-                            <i class="fas fa-paper-plane"></i> Submit Report
-                        </button>
-                        <button onclick="closeReportModal()" style="flex: 1; padding: 16px; background: #f1f5f9; color: #64748b; border: 2px solid #e2e8f0; border-radius: 10px; font-weight: 600; cursor: pointer;">
-                            Cancel
-                        </button>
-                    </div>
-                    
-                    <p style="color: #64748b; font-size: 13px; margin-top: 20px;">
-                        <i class="fas fa-shield-alt"></i> Reports are sent directly to Vacation Club admin. Member will be reviewed.
-                    </p>
-                </div>
-            `;
-            
-            document.getElementById('reportModal').style.display = 'flex';
-        }
-        
-        function selectReason(reason) {
-            // Update all buttons
-            document.querySelectorAll('.reason-btn').forEach(btn => {
-                btn.classList.remove('selected');
-            });
-            
-            // Select clicked button
-            event.target.classList.add('selected');
-            document.getElementById('selectedReason').value = reason;
-        }
-        
-        async function submitMemberReport() {
-            const memberId = document.getElementById('reportMemberId').value.trim().toUpperCase();
-            const reason = document.getElementById('selectedReason').value;
-            const details = document.getElementById('reportDetails').value;
-            
-            if (!memberId || !reason || !details) {
-                showNotification('Please fill all fields', 'error');
-                return;
-            }
-            
-            const reportData = {
-                hotelId: currentHotel.id,
-                memberId: memberId,
-                reason: reason,
-                details: details
-            };
-            
-            const success = await submitReport(reportData);
-            if (success) {
-                closeReportModal();
-                
-                // If admin mode, offer to suspend member
-                if (isAdminMode && confirm(`Suspend member ${memberId} immediately?`)) {
-                    await updateMemberStatus(memberId, 'suspended', `Reported by ${currentHotel.id}: ${reason}`);
-                }
-            }
-        }
-        
-        function reportMemberFromAdmin(hotelId, memberId) {
-            currentHotel = { id: hotelId };
-            showReportModal();
-            
-            // Pre-fill the member ID
-            setTimeout(() => {
-                document.getElementById('reportMemberId').value = memberId;
-            }, 100);
         }
         
         async function refreshData() {
-            const success = await loadClubData();
-            if (success && currentMember) {
+            await loadClubData();
+            if (currentMember) {
                 loadHotelsToDashboard();
             }
-        }
-        
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text);
-            showNotification('Copied to clipboard!', 'success');
-        }
-        
-        function closeModal() {
-            document.getElementById('hotelModal').style.display = 'none';
-        }
-        
-        function closeHotelLogin() {
-            document.getElementById('hotelLoginModal').style.display = 'none';
-        }
-        
-        function closeReportModal() {
-            document.getElementById('reportModal').style.display = 'none';
         }
         
         function logout() {
@@ -3070,9 +1396,8 @@
             
             document.getElementById('memberId').value = '';
             document.getElementById('password').value = '';
-            document.getElementById('notification').style.display = 'none';
             
-            showNotification('Logged out successfully', 'info');
+            showNotification('Logged out', 'info');
         }
         
         // Initialize
@@ -3080,535 +1405,21 @@
             if (e.key === 'Enter') loginMember();
         });
         
-        window.onload = async function() {
+        window.onload = function() {
             document.getElementById('memberId').focus();
             
-            // Load initial data
-            await loadClubData();
-            
-            // Auto-login for testing (remove in production)
+            // Test credentials
             // document.getElementById('memberId').value = 'VC-001';
             // document.getElementById('password').value = '1234';
         };
         
         window.onclick = function(event) {
-            const modals = ['hotelModal', 'hotelLoginModal', 'reportModal'];
-            modals.forEach(modalId => {
-                const modal = document.getElementById(modalId);
-                if (event.target === modal) {
-                    if (modalId === 'hotelModal') closeModal();
-                    if (modalId === 'hotelLoginModal') closeHotelLogin();
-                    if (modalId === 'reportModal') closeReportModal();
-                }
-            });
-        };
-    </script>
-</body>
-</html>';
-        
-        // Admin credentials (voor admin panel weergave)
-        const ADMIN_MODE_PASSWORD = 'admin123'; // Verander dit!
-        
-        // Data cache
-        let clubData = {
-            members: [],
-            hotels: [],
-            lastUpdated: null
-        };
-        
-        let currentMember = null;
-        let currentHotel = null;
-        let isAdminMode = false;
-
-        // ==================== GOOGLE SHEETS FUNCTIES ====================
-        
-        async function fetchFromGoogleSheets(action, params = {}) {
-            try {
-                const url = new URL(GOOGLE_SHEETS_API);
-                url.searchParams.append('action', action);
-                
-                // Add params to URL
-                Object.keys(params).forEach(key => {
-                    url.searchParams.append(key, params[key]);
-                });
-                
-                // Add timestamp to prevent caching
-                url.searchParams.append('_t', Date.now());
-                
-                const response = await fetch(url);
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                
-                return await response.json();
-            } catch (error) {
-                console.error('Google Sheets fetch error:', error);
-                showNotification('Failed to load data. Using cached version.', 'error');
-                return null;
-            }
-        }
-        
-        async function loadClubData() {
-            showNotification('Loading data from Google Sheets...', 'info');
-            
-            try {
-                // Load members and hotels in parallel
-                const [membersData, hotelsData] = await Promise.all([
-                    fetchFromGoogleSheets('getMembers'),
-                    fetchFromGoogleSheets('getHotels')
-                ]);
-                
-                if (membersData && !membersData.error) {
-                    clubData.members = membersData;
-                }
-                
-                if (hotelsData && !hotelsData.error) {
-                    clubData.hotels = hotelsData;
-                }
-                
-                clubData.lastUpdated = new Date();
-                
-                // Update UI
-                document.getElementById('dataTimestamp').textContent = 
-                    clubData.lastUpdated.toLocaleTimeString();
-                document.getElementById('hotelCountBadge').textContent = 
-                    `${clubData.hotels.length} hotels available`;
-                
-                // Show admin info if in admin mode
-                if (isAdminMode) {
-                    document.getElementById('memberCount').textContent = clubData.members.length;
-                    document.getElementById('hotelCount').textContent = clubData.hotels.length;
-                    document.getElementById('lastSync').textContent = clubData.lastUpdated.toLocaleTimeString();
-                }
-                
-                showNotification('Data loaded successfully!', 'success');
-                return true;
-                
-            } catch (error) {
-                console.error('Load error:', error);
-                showNotification('Error loading data', 'error');
-                return false;
-            }
-        }
-        
-        async function submitReport(reportData) {
-            try {
-                const result = await fetchFromGoogleSheets('addReport', reportData);
-                if (result && result.success) {
-                    showNotification('Report submitted successfully! Admin notified.', 'success');
-                    return true;
-                } else {
-                    showNotification('Failed to submit report', 'error');
-                    return false;
-                }
-            } catch (error) {
-                console.error('Report error:', error);
-                showNotification('Network error submitting report', 'error');
-                return false;
-            }
-        }
-        
-        async function updateMemberStatus(memberId, newStatus, reason = '') {
-            try {
-                const result = await fetchFromGoogleSheets('updateMember', {
-                    memberId: memberId,
-                    status: newStatus,
-                    reason: reason
-                });
-                
-                if (result && result.success) {
-                    // Update local cache
-                    const memberIndex = clubData.members.findIndex(m => m.id === memberId);
-                    if (memberIndex !== -1) {
-                        clubData.members[memberIndex].status = newStatus;
-                    }
-                    
-                    showNotification(`Member ${memberId} status updated to ${newStatus}`, 'success');
-                    return true;
-                }
-                return false;
-            } catch (error) {
-                console.error('Update error:', error);
-                return false;
-            }
-        }
-
-        // ==================== MAIN FUNCTIES ====================
-        
-        function showNotification(message, type = 'info') {
-            const notification = document.getElementById('notification');
-            const icon = type === 'success' ? 'check-circle' : 
-                        type === 'error' ? 'exclamation-circle' : 'info-circle';
-            
-            notification.innerHTML = `<i class="fas fa-${icon}"></i> ${message}`;
-            notification.className = `notification ${type}`;
-            notification.style.display = 'block';
-            
-            if (type === 'success' || type === 'error') {
-                setTimeout(() => {
-                    notification.style.display = 'none';
-                }, 5000);
-            }
-        }
-        
-        async function loginMember() {
-            const memberId = document.getElementById('memberId').value.trim().toUpperCase();
-            const password = document.getElementById('password').value;
-            
-            // Check for admin mode
-            if (password === ADMIN_MODE_PASSWORD && memberId === 'ADMIN') {
-                isAdminMode = true;
-                showNotification('Admin mode activated', 'success');
-                
-                // Show admin info
-                document.getElementById('adminInfo').style.display = 'block';
-                document.getElementById('sheetLink').href = 'https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID';
-                
-                // Load data
-                await loadClubData();
-                return;
-            }
-            
-            if (!memberId || !password) {
-                showNotification('Please enter both Member ID and Password', 'error');
-                return;
-            }
-            
-            // Load fresh data first
-            await loadClubData();
-            
-            // Find member
-            const member = clubData.members.find(m => 
-                m.id === memberId && m.password === password
-            );
-            
-            if (member) {
-                if (member.status !== 'active') {
-                    showNotification(`Account is ${member.status}. Contact support.`, 'error');
-                    return;
-                }
-                
-                if (member.isPaid !== true && member.isPaid !== 'TRUE') {
-                    showNotification('Membership payment pending', 'error');
-                    return;
-                }
-                
-                // Login successful
-                currentMember = member;
-                showNotification(`Welcome, ${member.firstName}!`, 'success');
-                
-                setTimeout(() => {
-                    document.getElementById('loginContainer').style.display = 'none';
-                    document.getElementById('dashboardContainer').style.display = 'block';
-                    
-                    document.getElementById('dashboardMemberName').textContent = 
-                        `${member.firstName} ${member.lastName}`;
-                    document.getElementById('dashboardMemberId').textContent = 
-                        `${member.id} • ${member.isPaid ? 'Premium' : 'Standard'}`;
-                    
-                    loadHotelsToDashboard();
-                }, 1000);
-                
-            } else {
-                showNotification('Invalid credentials. Try: VC-001 / 1234', 'error');
-            }
-        }
-        
-        function loadHotelsToDashboard() {
-            const hotelsGrid = document.getElementById('hotelsGrid');
-            hotelsGrid.innerHTML = '';
-            
-            clubData.hotels.forEach(hotel => {
-                const hotelCard = document.createElement('div');
-                hotelCard.className = 'hotel-card';
-                hotelCard.onclick = () => openHotelModal(hotel.id);
-                
-                hotelCard.innerHTML = `
-                    <div class="hotel-image" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1519046904884-53103b34b206?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')">
-                        <div class="hotel-badge">${hotel.discount || 'Special Offer'}</div>
-                    </div>
-                    <div class="hotel-content">
-                        <h3 class="hotel-name">${hotel.name}</h3>
-                        <p class="hotel-location">
-                            <i class="fas fa-map-marker-alt"></i> ${hotel.location}
-                        </p>
-                        <p class="hotel-description">${hotel.description || 'Luxury accommodations'}</p>
-                        
-                        <div class="promo-section">
-                            <div class="promo-title">
-                                <i class="fas fa-tag"></i> Exclusive Offer
-                            </div>
-                            <p class="promo-details">
-                                <strong>${hotel.discount || 'Member Discount'}</strong><br>
-                                ${hotel.promoCode ? `Code: <code>${hotel.promoCode}</code>` : 'Contact for details'}
-                            </p>
-                        </div>
-                        
-                        <button class="booking-btn" onclick="event.stopPropagation(); bookHotel('${hotel.id}')">
-                            <i class="fas fa-calendar-check"></i> View Details & Book
-                        </button>
-                    </div>
-                `;
-                
-                hotelsGrid.appendChild(hotelCard);
-            });
-        }
-        
-        function openHotelModal(hotelId) {
-            const hotel = clubData.hotels.find(h => h.id === hotelId);
-            if (!hotel || !currentMember) return;
-            
-            document.getElementById('modalHotelName').textContent = hotel.name;
-            
-            const modalContent = document.getElementById('modalContent');
-            modalContent.innerHTML = `
-                <div style="margin-bottom: 25px;">
-                    <div style="height: 200px; background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1519046904884-53103b34b206?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center; border-radius: 12px; margin-bottom: 20px;"></div>
-                    
-                    <h4 style="color: #1e293b; margin-bottom: 10px;">📍 ${hotel.location}</h4>
-                    <p style="color: #475569; line-height: 1.6; margin-bottom: 20px;">${hotel.description || 'Premium luxury accommodations'}</p>
-                </div>
-                
-                <div style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; padding: 20px; border-radius: 12px; margin-bottom: 25px;">
-                    <h4 style="margin-bottom: 10px; font-size: 20px;"><i class="fas fa-gift"></i> Your Exclusive Offer</h4>
-                    <p style="font-size: 28px; font-weight: bold; margin-bottom: 5px;">${hotel.discount || 'Special Member Rate'}</p>
-                    ${hotel.promoCode ? `<p style="opacity: 0.9;">Promo Code: <code style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 6px; font-size: 16px;">${hotel.promoCode}</code></p>` : ''}
-                </div>
-                
-                <div style="margin-bottom: 25px;">
-                    <h4 style="color: #1e293b; margin-bottom: 15px;"><i class="fas fa-phone-alt"></i> Contact & Booking</h4>
-                    <div style="background: #f8fafc; border-radius: 12px; padding: 20px;">
-                        <p style="color: #475569; margin-bottom: 15px;">${hotel.instructions || 'Contact hotel directly for booking'}</p>
-                        
-                        ${hotel.contact ? `<p><strong>Contact:</strong> ${hotel.contact}</p>` : ''}
-                        ${hotel.phone ? `<p><strong>Phone:</strong> <a href="tel:${hotel.phone}" style="color: #4f46e5;">${hotel.phone}</a></p>` : ''}
-                        ${hotel.email ? `<p><strong>Email:</strong> <a href="mailto:${hotel.email}" style="color: #4f46e5;">${hotel.email}</a></p>` : ''}
-                    </div>
-                </div>
-                
-                <div class="qr-container">
-                    <h4 style="color: #1e293b; margin-bottom: 15px;"><i class="fas fa-qrcode"></i> Member Verification</h4>
-                    <div class="qr-code">
-                        ${currentMember.id}<br>
-                        ${hotel.promoCode || 'VC-MEMBER'}
-                    </div>
-                    <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">
-                        Show this at check-in for verification
-                    </p>
-                </div>
-                
-                ${isAdminMode ? `
-                <div style="background: #fee2e2; border-radius: 12px; padding: 15px; margin-top: 20px;">
-                    <h4 style="color: #991b1b; margin-bottom: 10px;"><i class="fas fa-tools"></i> Admin Tools</h4>
-                    <button onclick="reportMemberFromAdmin('${hotel.id}', '${currentMember.id}')" style="width: 100%; padding: 12px; background: #ef4444; color: white; border: none; border-radius: 8px;">
-                        <i class="fas fa-flag"></i> Report This Member
-                    </button>
-                </div>
-                ` : ''}
-                
-                <div style="display: flex; gap: 15px; margin-top: 30px;">
-                    ${hotel.phone ? `
-                    <button onclick="window.open('tel:${hotel.phone}', '_blank')" style="flex: 1; padding: 16px; background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
-                        <i class="fas fa-phone-alt"></i> Call to Book
-                    </button>
-                    ` : ''}
-                    
-                    ${hotel.promoCode ? `
-                    <button onclick="copyToClipboard('${hotel.promoCode}')" style="flex: 1; padding: 16px; background: #f1f5f9; color: #4f46e5; border: 2px solid #e2e8f0; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
-                        <i class="fas fa-copy"></i> Copy Promo Code
-                    </button>
-                    ` : ''}
-                </div>
-            `;
-            
-            document.getElementById('hotelModal').style.display = 'flex';
-        }
-        
-        function showHotelLogin() {
-            document.getElementById('hotelLoginModal').style.display = 'flex';
-            event.preventDefault();
-        }
-        
-        function hotelLogin() {
-            const hotelId = document.getElementById('hotelIdInput').value.trim().toUpperCase();
-            const password = document.getElementById('hotelPassword').value;
-            
-            // Simple hotel authentication (in production, use proper auth)
-            if (hotelId && password) {
-                currentHotel = { id: hotelId };
+            if (event.target.classList.contains('modal')) {
+                closeModal();
                 closeHotelLogin();
-                showReportModal();
-            } else {
-                showNotification('Please enter hotel credentials', 'error');
-            }
-        }
-        
-        function showReportModal() {
-            const reportContent = document.getElementById('reportContent');
-            reportContent.innerHTML = `
-                <div class="report-form">
-                    <p style="color: #475569; margin-bottom: 20px;">
-                        <i class="fas fa-info-circle"></i> Report a member issue to Vacation Club admin.
-                    </p>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Member ID to Report</label>
-                        <div class="input-with-icon">
-                            <i class="fas fa-user-tag"></i>
-                            <input type="text" id="reportMemberId" class="form-input" placeholder="VC-001">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Reason for Report</label>
-                        <div class="report-reasons">
-                            <div class="reason-btn" onclick="selectReason('no-show')">No-show</div>
-                            <div class="reason-btn" onclick="selectReason('damage')">Property Damage</div>
-                            <div class="reason-btn" onclick="selectReason('behavior')">Inappropriate Behavior</div>
-                            <div class="reason-btn" onclick="selectReason('payment')">Payment Issues</div>
-                            <div class="reason-btn" onclick="selectReason('other')">Other</div>
-                        </div>
-                        <input type="hidden" id="selectedReason" value="">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Details (required)</label>
-                        <textarea id="reportDetails" placeholder="Please provide specific details about the issue..."></textarea>
-                    </div>
-                    
-                    <div style="display: flex; gap: 15px; margin-top: 20px;">
-                        <button onclick="submitMemberReport()" style="flex: 1; padding: 16px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer;">
-                            <i class="fas fa-paper-plane"></i> Submit Report
-                        </button>
-                        <button onclick="closeReportModal()" style="flex: 1; padding: 16px; background: #f1f5f9; color: #64748b; border: 2px solid #e2e8f0; border-radius: 10px; font-weight: 600; cursor: pointer;">
-                            Cancel
-                        </button>
-                    </div>
-                    
-                    <p style="color: #64748b; font-size: 13px; margin-top: 20px;">
-                        <i class="fas fa-shield-alt"></i> Reports are sent directly to Vacation Club admin. Member will be reviewed.
-                    </p>
-                </div>
-            `;
-            
-            document.getElementById('reportModal').style.display = 'flex';
-        }
-        
-        function selectReason(reason) {
-            // Update all buttons
-            document.querySelectorAll('.reason-btn').forEach(btn => {
-                btn.classList.remove('selected');
-            });
-            
-            // Select clicked button
-            event.target.classList.add('selected');
-            document.getElementById('selectedReason').value = reason;
-        }
-        
-        async function submitMemberReport() {
-            const memberId = document.getElementById('reportMemberId').value.trim().toUpperCase();
-            const reason = document.getElementById('selectedReason').value;
-            const details = document.getElementById('reportDetails').value;
-            
-            if (!memberId || !reason || !details) {
-                showNotification('Please fill all fields', 'error');
-                return;
-            }
-            
-            const reportData = {
-                hotelId: currentHotel.id,
-                memberId: memberId,
-                reason: reason,
-                details: details
-            };
-            
-            const success = await submitReport(reportData);
-            if (success) {
                 closeReportModal();
-                
-                // If admin mode, offer to suspend member
-                if (isAdminMode && confirm(`Suspend member ${memberId} immediately?`)) {
-                    await updateMemberStatus(memberId, 'suspended', `Reported by ${currentHotel.id}: ${reason}`);
-                }
             }
-        }
-        
-        function reportMemberFromAdmin(hotelId, memberId) {
-            currentHotel = { id: hotelId };
-            showReportModal();
-            
-            // Pre-fill the member ID
-            setTimeout(() => {
-                document.getElementById('reportMemberId').value = memberId;
-            }, 100);
-        }
-        
-        async function refreshData() {
-            const success = await loadClubData();
-            if (success && currentMember) {
-                loadHotelsToDashboard();
-            }
-        }
-        
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text);
-            showNotification('Copied to clipboard!', 'success');
-        }
-        
-        function closeModal() {
-            document.getElementById('hotelModal').style.display = 'none';
-        }
-        
-        function closeHotelLogin() {
-            document.getElementById('hotelLoginModal').style.display = 'none';
-        }
-        
-        function closeReportModal() {
-            document.getElementById('reportModal').style.display = 'none';
-        }
-        
-        function logout() {
-            currentMember = null;
-            currentHotel = null;
-            isAdminMode = false;
-            
-            document.getElementById('dashboardContainer').style.display = 'none';
-            document.getElementById('loginContainer').style.display = 'flex';
-            document.getElementById('adminInfo').style.display = 'none';
-            
-            document.getElementById('memberId').value = '';
-            document.getElementById('password').value = '';
-            document.getElementById('notification').style.display = 'none';
-            
-            showNotification('Logged out successfully', 'info');
-        }
-        
-        // Initialize
-        document.getElementById('password').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') loginMember();
-        });
-        
-        window.onload = async function() {
-            document.getElementById('memberId').focus();
-            
-            // Load initial data
-            await loadClubData();
-            
-            // Auto-login for testing (remove in production)
-            // document.getElementById('memberId').value = 'VC-001';
-            // document.getElementById('password').value = '1234';
-        };
-        
-        window.onclick = function(event) {
-            const modals = ['hotelModal', 'hotelLoginModal', 'reportModal'];
-            modals.forEach(modalId => {
-                const modal = document.getElementById(modalId);
-                if (event.target === modal) {
-                    if (modalId === 'hotelModal') closeModal();
-                    if (modalId === 'hotelLoginModal') closeHotelLogin();
-                    if (modalId === 'reportModal') closeReportModal();
-                }
-            });
         };
     </script>
 </body>
 </html>
-
